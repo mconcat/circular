@@ -1,0 +1,21 @@
+{
+  "resourceMetrics": [
+    {
+      "scopeMetrics": [
+        {
+          "metrics": [
+            {
+              "name": "generic.turn.duration",
+              "histogram": {
+                "dataPoints": [
+                  { "count": 1, "sum": 42.0 }
+                ],
+                "aggregationTemporality": 1
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

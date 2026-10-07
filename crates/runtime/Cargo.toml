@@ -1,0 +1,17 @@
+[package]
+name = "runtime"
+version = "0.1.0-alpha.1"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+circular-protocol = { package = "protocol", path = "../protocol" }
+circular-core = { path = "../core" }
+circular-plan = { package = "plan", path = "../plan" }
+
+[features]
+test-support = []
+
+[lib]
+path = "src/lib.rs"

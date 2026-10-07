@@ -1,0 +1,28 @@
+{
+  "name": "@circular/exports",
+  "version": "0.1.0",
+  "type": "module",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js",
+      "default": "./src/index.js"
+    },
+    "./internal": {
+      "types": "./src/surface-value.d.ts",
+      "import": "./src/surface-value.js"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "node --test ./test/*.test.mjs"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@circular/core": "0.1.0",
+    "@circular/protocol": "0.1.0"
+  }
+}

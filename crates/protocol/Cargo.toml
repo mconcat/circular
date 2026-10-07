@@ -1,0 +1,15 @@
+[package]
+name = "protocol"
+version = "0.1.0-alpha.1"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+circular-core = { path = "../core" }
+icu_normalizer = { version = "2.3.0", default-features = false, features = ["compiled_data"] }
+sha2 = "=0.10.9"
+subtle = "=2.6.1"
+
+[lib]
+path = "src/lib.rs"

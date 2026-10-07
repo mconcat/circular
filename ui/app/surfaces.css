@@ -1,0 +1,166 @@
+/* Matte surfaces. Geometry, type and observation marks keep their roles. */
+:root {
+  --hf-01-edge-strong: color-mix(in srgb, var(--line) 60%, var(--muted));
+  --hf-01-edge-hover: color-mix(in srgb, var(--line) 40%, var(--muted));
+  --hf-01-overlay: 0 8px 24px color-mix(in srgb, var(--shadow) 28%, transparent),
+    0 2px 6px color-mix(in srgb, var(--shadow) 18%, transparent);
+}
+
+/* The canvas, shell, card and control are separate matte planes. */
+.appbar,
+.sidebar,
+.inspector,
+.statusbar,
+.time-machine,
+.journal,
+.canvas-header {
+  border-color: var(--line-soft);
+}
+
+.project-card,
+.project-card:hover,
+.surface-card,
+.annotation,
+.component-core,
+.wire-component.selected .component-core,
+.wire-component:focus-visible .component-core {
+  box-shadow: none;
+}
+
+.project-card,
+.surface-card,
+.annotation {
+  border-radius: 6px;
+}
+
+.node:hover,
+.project-card:hover {
+  border-color: var(--hf-01-edge-hover);
+}
+
+.node-header {
+  border-radius: 8px 8px 0 0;
+}
+
+/* Canvas cards use style.css's rounded frame, shadow and scope stack, and
+   appearance.css's selection ring with the current palette. */
+.node.selected,
+.history-view .node.selected {
+  border-color: var(--blue);
+}
+
+.node.selected > .node-header {
+  background: var(--blue-soft);
+}
+
+.node:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.scope-row.active,
+.actor-list button.selected {
+  color: var(--ink);
+  box-shadow: inset 2px 0 0 var(--blue);
+}
+
+.node-icon,
+.project-mark,
+.project-mark-large,
+.node-header .viewer-toggle,
+.status-pill,
+.health-banner,
+kbd {
+  border-radius: 3px;
+}
+
+.node-icon,
+.project-mark {
+  border-color: var(--line-soft);
+}
+
+.selected .node-icon {
+  border-color: var(--blue-border);
+}
+
+.pause-control,
+.quiet-button,
+.prompt-send,
+.search-button,
+.appearance-options fieldset {
+  border-radius: 3px;
+}
+
+.pause-control,
+.quiet-button,
+.prompt-send,
+.search-button {
+  background: var(--elevated);
+  border-color: var(--hf-01-edge-strong);
+}
+
+.component-core {
+  background: var(--elevated);
+  border-color: var(--hf-01-edge-strong);
+  border-radius: 3px;
+}
+
+.wire-component.selected .component-core,
+.wire-component:focus-visible .component-core {
+  background: var(--blue-soft);
+}
+
+/* Only surfaces floating above the work retain elevation shadows. */
+.canvas-tools,
+.popover,
+.wire-probe,
+.wire-actions,
+.component-editor,
+.canvas-notice,
+.placement-hint,
+.time-hover,
+dialog,
+dialog.palette {
+  background: var(--elevated);
+  border-color: var(--hf-01-edge-strong);
+  border-radius: 6px;
+  box-shadow: var(--hf-01-overlay);
+}
+
+.canvas-notice {
+  border-color: var(--amber-border);
+}
+
+.canvas-notice[data-kind="accepted"] {
+  border-color: var(--line);
+}
+
+.canvas-notice[data-kind="failed"],
+.canvas-notice[data-kind="rejected"] {
+  border-color: var(--red-border);
+}
+
+::selection {
+  background: var(--blue-soft);
+  color: var(--ink);
+}
+
+/* A quiet track keeps dense panels looking like continuous material. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--hf-01-edge-strong);
+  border: 2px solid transparent;
+  background-clip: content-box;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--hf-01-edge-hover);
+}

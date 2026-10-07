@@ -1,0 +1,76 @@
+import type { CircularValue } from "@circular/protocol";
+import type { GeneratedConfigFor, PublicActorSpelling, PipelineActorConfig, ProjectInputConfig, ProjectOutputConfig, TransformExpression, PredicateExpression } from "./config.js";
+import type { InputNameFor, ActorHandle, NewFlowActorHandle, NewSourceActorHandle, NewTerminalActorHandle, NewMultiOutletActorHandle, WritableBoundaryActorHandle, PipelineActorHandle, ReplicatorActorHandle } from "./handles.js";
+import type { NewHandleMode, SourceEndpoint, PendingEndpoint } from "./wiring.js";
+type ChainOptions<Name extends PublicActorSpelling, Inputs = never> = { readonly at?: InputNameFor<Name, Inputs> };
+type InletMap<Name extends PublicActorSpelling, Inputs = never> = [InputNameFor<Name, Inputs>] extends [never] ? never : { readonly [P in InputNameFor<Name, Inputs>]?: SourceEndpoint<unknown> | PendingEndpoint<unknown> | readonly (SourceEndpoint<unknown> | PendingEndpoint<unknown>)[] };
+export interface DownstreamActorMethods<Input = CircularValue> {
+  route<Inputs, Outputs>(config: GeneratedConfigFor<"route">, options?: ChainOptions<"route", Inputs>): ActorHandle<"route", NewHandleMode, Inputs, Outputs>;
+  debounce(config: GeneratedConfigFor<"debounce">, options?: ChainOptions<"debounce">): NewFlowActorHandle<"debounce", Input>;
+  alert(predicate: PredicateExpression<Input>, config: Omit<GeneratedConfigFor<"alert">, "predicate">, options?: ChainOptions<"alert">): NewFlowActorHandle<"alert", Input>;
+  tap(): NewFlowActorHandle<"tap", Input, Input>;
+  output(config: GeneratedConfigFor<"output">, options?: ChainOptions<"output">): NewTerminalActorHandle<"output">;
+  replicator<const Config extends GeneratedConfigFor<"replicator">>(config: Config, options?: ChainOptions<"replicator">): ReplicatorActorHandle<"replicator", NewHandleMode, Config>;
+  agent(config: GeneratedConfigFor<"agent">, options?: ChainOptions<"agent">): NewFlowActorHandle<"agent", string | Uint8Array | { readonly op: never }>;
+  counter(): NewFlowActorHandle<"counter", Input>;
+  ema(config: GeneratedConfigFor<"ema">, options?: ChainOptions<"ema">): NewFlowActorHandle<"ema", Input>;
+  windowedReduce<Inputs, Outputs>(config: GeneratedConfigFor<"windowed_reduce">, options?: ChainOptions<"windowed_reduce", Inputs>): ActorHandle<"windowed_reduce", NewHandleMode, Inputs, Outputs>;
+  timer(config: GeneratedConfigFor<"timer">, options?: ChainOptions<"timer">): NewFlowActorHandle<"timer", Input>;
+  toolExecutor(config: GeneratedConfigFor<"tool_executor">, options?: ChainOptions<"tool_executor">): NewFlowActorHandle<"tool_executor", Input>;
+  notify(config: GeneratedConfigFor<"notify">, options?: ChainOptions<"notify">): NewTerminalActorHandle<"notify">;
+  peer(config: GeneratedConfigFor<"peer">, options?: ChainOptions<"peer">): NewFlowActorHandle<"peer", Input>;
+  listener(config: GeneratedConfigFor<"listener">, options?: ChainOptions<"listener">): NewFlowActorHandle<"listener", Input>;
+  keyedReduce(config: GeneratedConfigFor<"keyed_reduce">, options?: ChainOptions<"keyed_reduce">): NewFlowActorHandle<"keyed_reduce", Input>;
+  request(config: GeneratedConfigFor<"request">, options?: ChainOptions<"request">): NewFlowActorHandle<"request", Input>;
+  file(config: GeneratedConfigFor<"file">, options?: ChainOptions<"file">): NewFlowActorHandle<"file", Input>;
+  json<const Config extends GeneratedConfigFor<"json">>(config: Config, options?: ChainOptions<"json">): NewFlowActorHandle<"json", Input, Config["initial"]>;
+  assemble(config: GeneratedConfigFor<"assemble">, options?: ChainOptions<"assemble">): NewFlowActorHandle<"assemble", Input>;
+  join(config: Parameters<typeof import("./join.js").join>[0], options?: { readonly at?: "event" | "state" | "remove" }): ReturnType<typeof import("./join.js").join>;
+  projectOutput(config: ProjectOutputConfig, options?: ChainOptions<"project_output">): NewTerminalActorHandle<"project_output">;
+  map(transform: TransformExpression): PendingEndpoint<CircularValue>;
+  filter(predicate: PredicateExpression<Input>): PendingEndpoint<Input>;
+  bang(): PendingEndpoint<null>;
+  parse(config: { readonly decoder: "json" | "kv" | "regex"; readonly field: string; readonly arguments?: Record<string, CircularValue> }): PendingEndpoint<CircularValue>;
+  flatten(config: { readonly at: readonly (string | bigint)[] }): PendingEndpoint<CircularValue>;
+}
+export declare function route<Inputs, Outputs>(config: GeneratedConfigFor<"route">, inputs?: InletMap<"route", Inputs>): ActorHandle<"route", NewHandleMode, Inputs, Outputs>;
+export declare function pipelineActor<const I extends string, const O extends string>(config: PipelineActorConfig<I, O>): PipelineActorHandle<NewHandleMode, I, O>;
+export declare function debounce(config: GeneratedConfigFor<"debounce">, inputs?: InletMap<"debounce">): NewFlowActorHandle<"debounce", CircularValue>;
+export declare function alert(predicate: PredicateExpression<CircularValue>, config: Omit<GeneratedConfigFor<"alert">, "predicate">, inputs?: InletMap<"alert">): NewFlowActorHandle<"alert", CircularValue>;
+export declare function tap(inputs?: InletMap<"tap">): NewFlowActorHandle<"tap", CircularValue, CircularValue>;
+export declare function input(config: GeneratedConfigFor<"input">, inputs?: InletMap<"input">): WritableBoundaryActorHandle<"input", NewHandleMode>;
+export declare function output(config: GeneratedConfigFor<"output">, inputs?: InletMap<"output">): NewTerminalActorHandle<"output">;
+export declare function replicator<const Config extends GeneratedConfigFor<"replicator">>(config: Config, inputs?: InletMap<"replicator">): ReplicatorActorHandle<"replicator", NewHandleMode, Config>;
+export declare function agent(config: GeneratedConfigFor<"agent">, inputs?: InletMap<"agent">): NewFlowActorHandle<"agent", string | Uint8Array | { readonly op: never }>;
+export declare function counter(inputs?: InletMap<"counter">): NewFlowActorHandle<"counter", CircularValue>;
+export declare function ema(config: GeneratedConfigFor<"ema">, inputs?: InletMap<"ema">): NewFlowActorHandle<"ema", CircularValue>;
+export declare function windowedReduce<Inputs, Outputs>(config: GeneratedConfigFor<"windowed_reduce">, inputs?: InletMap<"windowed_reduce", Inputs>): ActorHandle<"windowed_reduce", NewHandleMode, Inputs, Outputs>;
+export declare function timer(config: GeneratedConfigFor<"timer">, inputs?: InletMap<"timer">): NewFlowActorHandle<"timer", CircularValue>;
+export declare function toolExecutor(config: GeneratedConfigFor<"tool_executor">, inputs?: InletMap<"tool_executor">): NewFlowActorHandle<"tool_executor", CircularValue>;
+export declare function notify(config: GeneratedConfigFor<"notify">, inputs?: InletMap<"notify">): NewTerminalActorHandle<"notify">;
+export declare function peer(config: GeneratedConfigFor<"peer">, inputs?: InletMap<"peer">): NewFlowActorHandle<"peer", CircularValue>;
+export declare function listener(config: GeneratedConfigFor<"listener">, inputs?: InletMap<"listener">): NewFlowActorHandle<"listener", CircularValue>;
+export declare function keyedReduce(config: GeneratedConfigFor<"keyed_reduce">, inputs?: InletMap<"keyed_reduce">): NewFlowActorHandle<"keyed_reduce", CircularValue>;
+export declare function request(config: GeneratedConfigFor<"request">, inputs?: InletMap<"request">): NewFlowActorHandle<"request", CircularValue>;
+export declare function file(config: GeneratedConfigFor<"file">, inputs?: InletMap<"file">): NewFlowActorHandle<"file", CircularValue>;
+export declare function json<const Config extends GeneratedConfigFor<"json">>(config: Config, inputs?: InletMap<"json">): NewFlowActorHandle<"json", CircularValue, Config["initial"]>;
+export declare function otlp(config: GeneratedConfigFor<"otlp">, inputs?: InletMap<"otlp">): NewMultiOutletActorHandle<"otlp">;
+export declare function match<T = CircularValue>(source?: SourceEndpoint<T> | import("./wiring.js").PendingEndpoint<T>):
+  import("./presentation.js").LayoutActorReference & import("./presentation.js").ActorAuthoringSurface
+  & import("./wiring.js").TargetEndpoint<T, import("./wiring.js").NewHandleMode> & {
+    readonly actorType: "match";
+    readonly mode: import("./wiring.js").NewHandleMode;
+    readonly ok: SourceEndpoint<T, import("./wiring.js").NewHandleMode>;
+    readonly err: SourceEndpoint<Reason, import("./wiring.js").NewHandleMode>;
+    readonly in: { readonly event: import("./wiring.js").TargetEndpoint<T> & import("./wiring.js").InletObservation };
+    readonly out: {
+      readonly ok: SourceEndpoint<T, import("./wiring.js").NewHandleMode>;
+      readonly err: SourceEndpoint<Reason, import("./wiring.js").NewHandleMode>;
+    };
+  };
+type Reason = import("@circular/protocol").DeadLetterReason;
+export declare function assemble(config: GeneratedConfigFor<"assemble">, inputs?: InletMap<"assemble">): NewFlowActorHandle<"assemble", CircularValue>;
+export { join } from "./join.js";
+export declare function form<Inputs, Outputs>(config: GeneratedConfigFor<"form">, inputs?: InletMap<"form", Inputs>): ActorHandle<"form", NewHandleMode, Inputs, Outputs>;
+export declare function projectInput(config: ProjectInputConfig, inputs?: InletMap<"project_input">): WritableBoundaryActorHandle<"project_input", NewHandleMode>;
+export declare function projectOutput(config: ProjectOutputConfig, inputs?: InletMap<"project_output">): NewTerminalActorHandle<"project_output">;

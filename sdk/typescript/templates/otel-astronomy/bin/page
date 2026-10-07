@@ -1,0 +1,13 @@
+#!/bin/sh
+# Stand-in pager for the demo. It prints the page and exits 0; replace it with a call to your
+# own paging service.
+#
+# As the pipeline's `page` tool it reads the page text on standard input (the tool call's
+# arguments). As the program bound to the "oncall" notification channel it gets the
+# notification's title and body as its two arguments.
+if [ "$#" -ge 1 ]; then
+  message="$1${2:+: $2}"
+else
+  message=$(/bin/cat)
+fi
+/bin/echo "paged on-call: $message"

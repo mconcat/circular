@@ -1,0 +1,55 @@
+#!/usr/bin/python3
+"""Turns fault flags off in the OpenTelemetry demo, through the demo's own flag editor.
+
+usage: flag-off <demo url> [flag | -]
+
+The flag comes from the second argument. "-" reads it from standard input instead: the
+pipeline's flag_off tool passes "-", so the flag comes from the tool call's arguments. With
+no flag named (no argument, or empty input), every flag whose default variant is not "off"
+is set to "off".
+
+It touches one thing: the demo's flag file (src/flagd/demo.flagd.json in the demo
+checkout), read and written through the Feature Flags page's own API at
+<demo url>/feature/api/read-file and <demo url>/feature/api/write-to-file. flagd picks the
+change up by itself. Only the "defaultVariant" of the named flags changes.
+"""
+import json
+import sys
+import urllib.request
+
+
+def main():
+    if len(sys.argv) not in (2, 3):
+        print("usage: flag-off <demo url> [flag | -]", file=sys.stderr)
+        return 2
+    api = sys.argv[1].rstrip("/") + "/feature/api/"
+    wanted = sys.argv[2] if len(sys.argv) == 3 else ""
+    if wanted == "-":
+        wanted = sys.stdin.read().strip()
+    with urllib.request.urlopen(api + "read-file", timeout=10) as response:
+        config = json.load(response)
+    flags = config["flags"]
+    if wanted and wanted not in flags:
+        print("unknown flag: " + wanted)
+        return 2
+    names = [wanted] if wanted else sorted(flags)
+    changed = []
+    for name in names:
+        flag = flags[name]
+        if flag.get("defaultVariant") == "off" or "off" not in flag.get("variants", {}):
+            continue
+        changed.append(name + ": " + str(flag["defaultVariant"]) + " -> off")
+        flag["defaultVariant"] = "off"
+    if not changed:
+        print("no fault flag is on" if not wanted else wanted + " is already off")
+        return 0
+    body = json.dumps({"data": config}).encode()
+    request = urllib.request.Request(api + "write-to-file", data=body, method="POST",
+                                     headers={"content-type": "application/json"})
+    with urllib.request.urlopen(request, timeout=10) as response:
+        response.read()
+    print("\n".join(changed))
+    return 0
+
+
+sys.exit(main())

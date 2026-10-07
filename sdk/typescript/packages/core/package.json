@@ -1,0 +1,30 @@
+{
+  "name": "@circular/core",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js",
+      "default": "./src/index.js"
+    },
+    "./internal": {
+      "types": "./src/internal.d.ts",
+      "import": "./src/internal.js",
+      "default": "./src/internal.js"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@circular/protocol": "0.1.0",
+    "@circular/specs": "0.1.0"
+  }
+}

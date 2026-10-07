@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#f6f6f2" />
+    <title>Circular</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="product.css" />
+    <link rel="stylesheet" href="appearance.css" />
+    <link rel="stylesheet" href="surfaces.css" />
+    <link rel="stylesheet" href="typography.css" />
+    <link rel="stylesheet" href="workbench.css" />
+    <link rel="stylesheet" href="card-identity.css" />
+    <link rel="stylesheet" href="inspector-sections.css" />
+    <link rel="stylesheet" href="arrival-marks.css" />
+    <link rel="stylesheet" href="zoom-tiers.css" />
+    <link rel="stylesheet" href="motion.css" />
+    <script type="importmap">
+      {"imports": {"@circular/protocol/tables": "./node_modules/@circular/protocol/src/tables.generated.js", "@circular/protocol/internal/declaration-rows": "./node_modules/@circular/protocol/src/internal/declaration-rows.js", "@circular/exports/internal": "./node_modules/@circular/exports/src/surface-value.js", "@circular/client": "./node_modules/@circular/client/src/index.js", "@circular/client/subscription": "./node_modules/@circular/client/src/subscription.js", "@circular/protocol": "./node_modules/@circular/protocol/src/index.js", "@circular/protocol/actor-query": "./node_modules/@circular/protocol/src/actor-query.js", "@circular/protocol/authoring-query": "./node_modules/@circular/protocol/src/authoring-query.js", "@circular/protocol/declaration": "./node_modules/@circular/protocol/src/declaration.js", "@circular/protocol/establishment": "./node_modules/@circular/protocol/src/establishment.js", "@circular/protocol/subscription": "./node_modules/@circular/protocol/src/subscription-values.js", "@circular/core": "./node_modules/@circular/core/src/index.js", "@circular/exports": "./node_modules/@circular/exports/src/index.js", "@circular/specs": "./node_modules/@circular/specs/src/index.js", "@circular/core/internal": "./node_modules/@circular/core/src/internal.js", "@circular/generator": "./node_modules/@circular/generator/src/generator-entry.js", "@circular/generator/internal": "./node_modules/@circular/generator/src/internal.js"}}
+    </script>
+    <script src="appearance.js"></script>
+    <script defer src="bootstrap.js"></script>
+  </head>
+  <body>
+    <div id="app" class="app">
+      <header class="appbar">
+        <a
+          class="brand"
+          href="#canvas"
+          data-view="canvas"
+          aria-label="Circular canvas"
+          ><span class="brand-logo" data-brand="mark-dark.svg" aria-hidden="true"></span>circular</a
+        >
+        <script type="module">
+          // The header mark is assets/brand's mark, one file, drawn in the theme's ink (the
+          // file's shape masks the ink, so light and dark need no second picture). main.mjs names where
+          // assets/brand is in this layout; a page opened without it is in the source tree.
+          const brandRoot = new URL(new URLSearchParams(location.search).get('brandRoot') ?? '../../assets/brand/', location.href);
+          for (const mark of document.querySelectorAll('.brand-logo'))
+            mark.style.maskImage = `url("${new URL(mark.dataset.brand, brandRoot).href}")`;
+        </script>
+        <template data-project-shell>
+        <div class="project-path">
+          <span class="project-mark"></span><span></span
+          ><i data-icon="ChevronRight"></i><span class="muted">Workspace</span>
+        </div>
+        <nav class="view-switch" aria-label="Product navigation">
+          <button data-view="projects" class="active">Projects</button><button data-view="canvas">Canvas</button><button data-view="outputs">Outputs</button>
+        </nav>
+        <!-- The bar's right side is one element, the help button and Requests, so it can take
+             the share of room that keeps the tabs at the window's middle (product.css). -->
+        <div class="product-utility"><button class="icon-button" id="help-button" aria-label="Keyboard shortcuts" title="Keyboard shortcuts"><i data-icon="CircleHelp"></i></button><button data-action="approvals"><i data-icon="Bell"></i><span class="label">Requests</span><b id="approval-count" class="pending-badge">0</b></button></div>
+        </template>
+      </header>
+      <template data-project-shell>
+      <div id="connection-strip" class="connection-strip" hidden><span></span><button data-action="connection">Reconnect</button><p class="connection-cause" hidden></p><details class="connection-evidence" hidden><summary>Everything the command wrote</summary><pre></pre></details></div>
+      <div id="canvas-view" class="workspace hidden">
+        <aside class="sidebar">
+          <button class="search-button" id="search-button">
+            <i data-icon="Search"></i><span>Find in project…</span><kbd>⌘ K</kbd>
+          </button>
+          <div class="section-label">
+            WORKSPACE
+            <button
+              class="icon-button small"
+              id="new-actor-sidebar"
+              aria-label="Add actor"
+            >
+              <i data-icon="Plus"></i>
+            </button>
+          </div>
+          <div id="scope-navigation"></div>
+          <div class="sidebar-rule"></div>
+          <div class="section-label">
+            IN THIS SCOPE <span id="actor-count"></span>
+          </div>
+          <div id="actor-list" class="actor-list"></div>
+          <div class="sidebar-spacer"></div>
+          <div class="local-machine" role="button" tabindex="0" data-action="harnesses">
+            <span class="local-icon"><i data-icon="Cpu"></i></span>
+            <div>
+              <strong>Local machine</strong
+              ><span><span class="tiny-dot"></span> </span>
+            </div>
+          </div>
+        </aside>
+        <main class="work-area">
+          <header class="canvas-header">
+            <div>
+              <div class="breadcrumb">
+                <button data-scope="root"></button><span>/</span
+                ><span id="scope-breadcrumb"></span>
+              </div>
+              <h1 id="scope-title"></h1>
+            </div>
+            <div class="canvas-actions">
+              <div class="canvas-edit-tools"><button data-action="back" title="Back" aria-label="Back"><i data-icon="ArrowLeft"></i></button><button data-action="forward" title="Forward" aria-label="Forward"><i data-icon="ArrowRight"></i></button><button data-action="undo" title="Undo" aria-label="Undo"><i data-icon="Undo2"></i></button><button data-action="redo" title="Redo" aria-label="Redo"><i data-icon="Redo2"></i></button><button data-action="group" title="Group selection" aria-label="Group selection"><i data-icon="Layers"></i></button><button data-action="note" title="Add note" aria-label="Add note"><i data-icon="FileText"></i></button><button data-action="organize" title="Organize" aria-label="Organize" disabled><i data-icon="Network"></i></button></div>
+              <span id="scope-health" class="live-label"
+                ><span class="live-dot"></span> Live</span
+              >
+              <div class="pause-control">
+                <button id="pause-button" title="Pause the whole pipeline">
+                  <i data-icon="Pause"></i><span>Pause</span></button
+                ><button id="pause-menu-button" aria-label="More pause options">
+                  <i data-icon="ChevronDown"></i>
+                </button>
+                <div class="popover hidden" id="pause-menu">
+                  <button id="force-pause">
+                    <i data-icon="Square"></i>Force pause
+                  </button>
+                  <p>Force pause also cancels work in progress across the pipeline.</p>
+                </div>
+              </div>
+              <button id="add-actor" class="dark-button">
+                <i data-icon="Plus"></i>Add actor
+              </button>
+            </div>
+          </header>
+          <section
+            class="canvas"
+            id="canvas"
+            data-tier="detail"
+            tabindex="0"
+            aria-label="Interactive actor canvas"
+          >
+            <canvas
+              id="wire-fluid"
+              class="wire-fluid"
+              aria-hidden="true"
+            ></canvas>
+            <div id="world" class="world">
+              <div id="annotations"></div><div id="wire-issues"></div>
+              <svg
+                id="wires"
+                class="wires"
+                aria-label="Actor connections"
+              ></svg>
+              <canvas
+                id="wire-light"
+                class="wire-light"
+                aria-hidden="true"
+              ></canvas>
+              <div id="wire-components"></div>
+              <div id="pending-steps"></div>
+              <div id="nodes"></div>
+              <svg id="connection-layer" class="wires connection-layer" aria-hidden="true"><g transform="translate(1500 1500)"><path id="connection-preview" class="connection-preview"></path></g></svg>
+              <div id="component-editor" class="component-editor hidden"></div>
+              <div id="placement-ghost" class="placement-ghost hidden"></div>
+              <div id="wire-actions" class="wire-actions hidden"></div>
+            </div>
+            <div id="wire-probe" class="wire-probe hidden" role="tooltip"></div>
+            <div id="placement-hint" class="placement-hint hidden"></div>
+            <div id="canvas-empty" class="empty-state" data-reason="CANVAS_EMPTY" hidden>
+              <span></span>
+              <button id="canvas-empty-add" class="quiet-button"><i data-icon="Plus"></i>Add actor</button>
+            </div>
+            <div class="canvas-legend">
+              <span><span class="legend-line"></span>Event stream</span>
+            </div>
+            <div class="canvas-tools">
+              <button
+                class="icon-button active"
+                id="select-tool"
+                aria-label="Select tool"
+                title="Select (V)"
+              >
+                <i data-icon="MousePointer2"></i></button
+              ><button
+                class="icon-button"
+                id="pan-tool"
+                aria-label="Pan tool"
+                title="Pan (H)"
+              >
+                <i data-icon="Hand"></i></button
+              ><span class="toolbar-divider"></span
+              ><button class="icon-button" id="zoom-out" aria-label="Zoom out">
+                <i data-icon="Minus"></i></button
+              ><span id="zoom-label">100%</span
+              ><button class="icon-button" id="zoom-in" aria-label="Zoom in">
+                <i data-icon="Plus"></i></button
+              ><span class="toolbar-divider"></span
+              ><button
+                class="icon-button"
+                id="fit-button"
+                aria-label="Fit canvas"
+                title="Fit canvas (F)"
+              >
+                <i data-icon="Scan"></i>
+              </button>
+            </div>
+            <div id="history-caption" class="history-caption" hidden>
+              <i data-icon="History"></i
+              ><span id="history-caption-label">Viewing history</span
+              ><time id="history-caption-time"></time
+              ><span class="history-readonly">Recorded state</span>
+            </div>
+            <div id="selection-toolbar" class="selection-toolbar" hidden><span data-selection-count>0 selected</span><button data-action="group">Group…</button><button data-action="align">Align tops</button><button data-action="delete">Delete</button></div><div id="canvas-notice" class="canvas-notice" hidden><span data-notice-text></span><small data-notice-code hidden></small><button data-dismiss-notice>Dismiss</button></div>
+          </section>
+          <section
+            class="time-machine"
+            id="time-machine"
+            data-mode="live"
+            aria-label="Time machine"
+          >
+            <header class="time-header">
+              <div class="time-heading">
+                <i data-icon="History"></i><strong>Time machine</strong
+                ><span id="time-mode">LIVE</span>
+              </div>
+              <div class="time-reading">
+                <time id="time-current"></time
+                ><span id="time-offset">now</span>
+              </div>
+              <div class="time-transport">
+                <select id="time-speed" aria-label="Replay speed">
+                  <option value="0.5">0.5×</option>
+                  <option value="1" selected>1×</option>
+                  <option value="2">2×</option>
+                  <option value="4">4×</option>
+                </select>
+                <button id="time-resume" disabled>
+                  <span class="transport-symbol"></span
+                  ><span id="time-resume-label">Resume</span>
+                </button>
+                <button
+                  id="time-live"
+                  class="active"
+                  aria-pressed="true"
+                  title="Return to the live canvas"
+                >
+                  <span class="tiny-dot green"></span>Live<i
+                    data-icon="ArrowRight"
+                  ></i>
+                </button>
+              </div>
+            </header>
+            <div class="time-chart-heading">
+              <span id="time-context">Arrivals of every actor · scrub to travel back</span
+              ><span id="time-regressions" class="time-note" hidden></span
+              ><span id="time-edge" class="time-note incidents" hidden></span
+              ><span id="time-scale"></span
+              ><select id="time-range" aria-label="Timeline visible range">
+                <option value="30">30 seconds</option>
+                <option value="120">2 minutes</option>
+                <option value="300">5 minutes</option>
+                <option value="Infinity" selected>All recorded</option>
+              </select>
+            </div>
+            <div class="time-chart">
+              <div
+                id="time-track"
+                class="time-track"
+                role="slider"
+                tabindex="0"
+                aria-label="Recorded time; use arrow keys to scrub, Shift for ten seconds, Space to resume, Escape for Live"
+                aria-valuemin="0"
+                aria-valuemax="120"
+                aria-valuenow="120"
+              >
+                <canvas id="time-density" aria-hidden="true"></canvas>
+                <div id="time-cursor" class="time-cursor"><i></i></div>
+                <div id="time-hover" class="time-hover" hidden>
+                  <div><strong></strong><small></small></div>
+                </div>
+              </div>
+              <div class="time-markers" aria-label="Recorded moments"></div>
+              <div id="time-ticks" class="time-ticks" aria-hidden="true"></div>
+            </div>
+          </section>
+          <section
+            class="journal collapsed"
+            id="journal"
+            aria-label="Arrival journal"
+          >
+            <header class="journal-header">
+              <button class="journal-title" id="journal-toggle">
+                <i data-icon="List"></i>Journal<span
+                  class="journal-count"
+                  id="journal-count"
+                  ></span
+                ><i data-icon="ChevronDown"></i>
+              </button>
+              <div class="journal-tabs">
+                <button class="active" data-journal="all">This scope</button
+                ><button data-journal="selected">Selection</button>
+              </div>
+              <span class="journal-follow"
+                ></span
+              ><button
+                class="icon-button small"
+                id="journal-expand"
+                aria-label="Expand journal"
+              >
+                <i data-icon="Maximize2"></i>
+              </button>
+            </header>
+            <div class="journal-columns">
+              <span>ACTOR / LOCAL INDEX</span><span>EVENT</span
+              ><span>DETAIL</span><span>RECORDED</span>
+            </div>
+            <div class="journal-rows" id="journal-rows"></div>
+          </section>
+        </main>
+        <aside
+          class="inspector"
+          id="inspector"
+          aria-label="Selection inspector"
+        ></aside>
+      </div>
+      </template>
+      <main id="projects-view" class="product-page"></main>
+      <template data-project-shell>
+      <main id="outputs-view" class="product-page hidden"></main>
+      <footer class="statusbar">
+        <div>
+          <span class="tiny-dot"></span
+          ><span id="footer-status"></span
+          ><span class="status-separator">/</span><span>Local workspace</span>
+        </div>
+        <div><button data-fixture-only data-action="developer" title="Prototype tools">Prototype tools</button></div>
+      </footer>
+      </template>
+    </div>
+    <template data-project-shell>
+    <dialog id="palette" class="palette">
+      <form method="dialog" class="palette-search">
+        <i data-icon="Search"></i
+        ><input
+          id="palette-input"
+          aria-label="Search actors"
+          placeholder="Type an actor or combinator name…"
+          autocomplete="off"
+        /><button class="key-button" aria-label="Close search">esc</button>
+      </form>
+      <nav
+        id="palette-tabs"
+        class="palette-tabs"
+        aria-label="Creation library"
+      ></nav>
+      <div id="palette-context" class="palette-context"></div>
+      <div id="palette-results"></div>
+      <div class="palette-footer">
+        <span><kbd>↵</kbd> Select</span
+        ><span data-fixture-only>Actor library · local preview</span>
+      </div>
+    </dialog>
+    <dialog id="help-dialog" class="help-dialog">
+      <div class="dialog-heading">
+        <h2>Keyboard shortcuts</h2>
+        <button
+          class="icon-button"
+          data-close="help-dialog"
+          aria-label="Close keyboard shortcuts"
+        >
+          <i data-icon="X"></i>
+        </button>
+      </div>
+      <p data-fixture-only>Explore the canvas. Everything here is a local design simulation.</p>
+      <dl>
+        <div>
+          <dt>Create at cursor</dt>
+          <dd><kbd>N</kbd> / <kbd>Tab</kbd> on canvas</dd>
+        </div>
+        <div>
+          <dt>Find or add</dt>
+          <dd><kbd>⌘</kbd> <kbd>K</kbd></dd>
+        </div>
+        <div>
+          <dt>Fit canvas</dt>
+          <dd><kbd>F</kbd></dd>
+        </div>
+        <div>
+          <dt>Select / pan tool</dt>
+          <dd><kbd>V</kbd> <kbd>H</kbd></dd>
+        </div>
+        <div>
+          <dt>Pan temporarily</dt>
+          <dd><kbd>Space</kbd> + drag</dd>
+        </div>
+        <div>
+          <dt>Open a nested scope</dt>
+          <dd>Double-click its actor</dd>
+        </div>
+        <div>
+          <dt>Connect / create downstream</dt>
+          <dd>Drag a port → port or empty space</dd>
+        </div>
+        <div>
+          <dt>Clear selection / cancel placement</dt>
+          <dd><kbd>Esc</kbd></dd>
+        </div>
+        <div>
+          <dt>Shift-click</dt>
+          <dd>headers to select several actors.</dd>
+        </div>
+        <div>
+          <dt><kbd>⌘Z</kbd> / <kbd>⇧⌘Z</kbd></dt>
+          <dd>undo and redo canvas edits.</dd>
+        </div>
+        <div>
+          <dt><kbd>Delete</kbd></dt>
+          <dd>removes the selection.</dd>
+        </div>
+        <div>
+          <dt>Text fields</dt>
+          <dd>keep their native editing shortcuts.</dd>
+        </div>
+      </dl>
+      <p class="help-tip">
+        The small button in each actor header switches View / Interact. Zoom out
+        for names and live views. Drag a corner to resize.
+      </p>
+    </dialog>
+    </template>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <dialog id="product-dialog" class="product-dialog" aria-labelledby="product-dialog-title">
+      <header><h2 id="product-dialog-title"></h2><button class="icon-button" data-product-close aria-label="Close"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></header>
+      <div data-dialog-body style="display: contents"></div>
+      <div class="dialog-actions" data-dialog-actions hidden></div>
+    </dialog>
+  </body>
+</html>

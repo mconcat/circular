@@ -1,0 +1,106 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": [
+      "ES2022"
+    ],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": false,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
+    "paths": {
+      "@circular/protocol": [
+        "./packages/protocol/src/index.d.ts"
+      ],
+      "@circular/protocol/establishment": [
+        "./packages/protocol/src/establishment.d.ts"
+      ],
+      "@circular/protocol/authoring-query": [
+        "./packages/protocol/src/authoring-query.d.ts"
+      ],
+      "@circular/protocol/declaration": [
+        "./packages/protocol/src/declaration.d.ts"
+      ],
+      "@circular/protocol/subscription": [
+        "./packages/protocol/src/subscription-values.d.ts"
+      ],
+      "@circular/client": [
+        "./packages/client/src/index.d.ts"
+      ],
+      "@circular/client/correlation": [
+        "./packages/client/src/correlation.d.ts"
+      ],
+      "@circular/client/canonical-frame": [
+        "./packages/client/src/canonical-frame.d.ts"
+      ],
+      "@circular/client/observability": [
+        "./packages/client/src/observability.d.ts"
+      ],
+      "@circular/client/owner-local": [
+        "./packages/client/src/owner-local.d.ts"
+      ],
+      "@circular/client/replay": [
+        "./packages/client/src/replay.d.ts"
+      ],
+      "@circular/client/internal/execution": [
+        "./packages/client/src/internal/execution.d.ts"
+      ],
+      "@circular/specs": [
+        "./packages/specs/src/index.d.ts"
+      ],
+      "@circular/core": [
+        "./packages/core/src/index.d.ts"
+      ],
+      "@circular/core/internal": [
+        "./packages/core/src/internal.d.ts"
+      ],
+      "@circular/exports": [
+        "./packages/exports/src/index.d.ts"
+      ],
+      "@circular/authoring": [
+        "./packages/authoring/src/index.d.ts"
+      ],
+      "@circular/authoring/current": [
+        "./packages/authoring/src/current.d.ts"
+      ],
+      "circular:current": [
+        "./packages/authoring/src/current.d.ts"
+      ],
+      "@circular/protocol/actor-query": [
+        "./packages/protocol/src/actor-query.d.ts"
+      ],
+      "@circular/client/subscription": [
+        "./packages/client/src/subscription.d.ts"
+      ],
+      "@circular/client/epoch-runner": [
+        "./packages/client/src/epoch-runner.d.ts"
+      ],
+      "@circular/protocol/authoring-values": [
+        "./packages/protocol/src/authoring-values.d.ts"
+      ],
+      "@circular/generator": [
+        "./packages/generator/src/generator-entry.d.ts"
+      ],
+      "@circular/generator/internal": [
+        "./packages/generator/src/internal.d.ts"
+      ],
+      "@circular/exports/internal": [
+        "./packages/exports/src/surface-value.d.ts"
+      ],
+      "@circular/protocol/internal/declaration-rows": [
+        "./packages/protocol/src/internal/declaration-rows.d.ts"
+      ],
+      "@circular/protocol/tables": [
+        "./packages/protocol/src/tables.generated.d.ts"
+      ]
+    }
+  },
+  "include": [
+    "packages/**/*.d.ts",
+    "review/**/*.ts"
+  ]
+}

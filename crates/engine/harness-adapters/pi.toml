@@ -1,0 +1,19 @@
+#
+
+#
+
+name = "pi"
+
+[detect]
+candidates = ["~/.local/bin/pi", "/opt/homebrew/bin/pi", "/usr/local/bin/pi"]
+
+[invoke]
+new = ["-p", "{prompt}"]
+resume = ["-p", "--continue", "{prompt}"]
+prompt = "argument"
+
+[output]
+format = "text"
+session = { constant = "continue" }
+
+[boundary]

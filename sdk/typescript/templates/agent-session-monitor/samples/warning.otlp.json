@@ -1,0 +1,20 @@
+{
+  "resourceLogs": [
+    {
+      "scopeLogs": [
+        {
+          "logRecords": [
+            {
+              "severityNumber": 13,
+              "severityText": "WARN",
+              "body": { "stringValue": "generic.retry_scheduled" },
+              "attributes": [
+                { "key": "event.name", "value": { "stringValue": "generic.retry_scheduled" } }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

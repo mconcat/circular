@@ -1,0 +1,10 @@
+#!/bin/sh
+# Sample verifier: checks the state of the world the remediation was supposed to change —
+# not a payload. Exit 0 closes the incident as resolved; non-zero escalates to Slack.
+# stdout is the evidence the resolution notification carries, so say what was checked.
+if [ -f fix.txt ]; then
+  printf 'fix marker present'
+  exit 0
+fi
+printf 'fix file missing' >&2
+exit 5

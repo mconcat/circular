@@ -1,0 +1,43 @@
+{
+  "resourceLogs": [
+    {
+      "resource": {
+        "attributes": [
+          { "key": "service.name", "value": { "stringValue": "r1-fixture" } }
+        ]
+      },
+      "scopeLogs": [
+        {
+          "scope": { "name": "r1" },
+          "logRecords": [
+            {
+              "timeUnixNano": "0",
+              "observedTimeUnixNano": "1787669563412048000",
+              "severityNumber": 9,
+              "severityText": "INFO",
+              "body": null,
+              "attributes": [
+                { "key": "event.name", "value": { "stringValue": "codex.sse_event" } },
+                { "key": "event.kind", "value": { "stringValue": "response.completed" } },
+                {
+                  "key": "error.message",
+                  "value": {
+                    "stringValue": "{\"type\":\"error\",\"status\":400,\"error\":{\"type\":\"invalid_request_error\",\"message\":\"The measured model is not supported.\"}}"
+                  }
+                },
+                { "key": "event.timestamp", "value": { "stringValue": "2026-08-25T14:52:43.412Z" } },
+                { "key": "conversation.id", "value": { "stringValue": "01a03968-c4a6-7f81-9904-68594ce32d0f" } },
+                { "key": "app.version", "value": { "stringValue": "0.148.0" } }
+              ],
+              "droppedAttributesCount": 0,
+              "flags": 0,
+              "traceId": "",
+              "spanId": "",
+              "eventName": "event otel/src/events/session_telemetry.rs:914"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

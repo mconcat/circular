@@ -1,0 +1,29 @@
+{
+  "name": "@circular/authoring",
+  "version": "0.1.0",
+  "type": "module",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    },
+    "./current": {
+      "types": "./src/current.d.ts",
+      "import": "./src/current.js"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "@circular/client": "0.1.0",
+    "@circular/core": "0.1.0",
+    "@circular/protocol": "0.1.0",
+    "@circular/specs": "0.1.0",
+    "typescript": "5.9.3",
+    "@circular/exports": "0.1.0",
+    "@circular/generator": "0.1.0"
+  }
+}

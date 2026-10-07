@@ -1,0 +1,26 @@
+{
+  "name": "@circular/generator",
+  "version": "0.1.0",
+  "type": "module",
+  "types": "./src/generator-entry.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/generator-entry.d.ts",
+      "import": "./src/generator-entry.js"
+    },
+    "./internal": {
+      "types": "./src/internal.d.ts",
+      "import": "./src/internal.js"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "@circular/core": "0.1.0",
+    "@circular/exports": "0.1.0",
+    "@circular/protocol": "0.1.0",
+    "@circular/specs": "0.1.0"
+  }
+}

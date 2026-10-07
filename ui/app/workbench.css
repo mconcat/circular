@@ -1,0 +1,212 @@
+:root {
+  --hf-03-appbar-inset: var(--window-controls-inset, 23px);
+  --hf-03-brand-slot: 153px;
+  --hf-03-explorer-width: calc(var(--hf-03-brand-slot) + var(--hf-03-appbar-inset));
+  --hf-03-appbar-end: 18px;
+}
+
+.app {
+  height: 100dvh;
+  min-height: 480px;
+}
+
+.appbar {
+  padding: 0 var(--hf-03-appbar-end) 0 var(--hf-03-appbar-inset);
+}
+
+.appbar .brand {
+  min-width: var(--hf-03-brand-slot);
+}
+
+.appbar .project-path {
+  min-width: 0;
+  max-width: 24vw;
+}
+
+.appbar .project-path > span:not(.project-mark) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.appbar .project-mark {
+  flex: none;
+}
+
+.appbar > .icon-button {
+  display: inline-flex;
+  margin: 0;
+  flex: none;
+}
+
+.workspace {
+  grid-template-columns: var(--hf-03-explorer-width) minmax(0, 1fr) var(--panel-width);
+}
+
+.workspace.inspector-folded {
+  grid-template-columns: var(--hf-03-explorer-width) minmax(0, 1fr);
+}
+
+.sidebar {
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.sidebar > * {
+  flex-shrink: 0;
+}
+
+.sidebar .search-button > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* A long scope or actor name is cut in the explorer; the inspector names it whole. */
+.sidebar .scope-row > span:not(.tiny-dot) {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar .actor-list button > span:first-of-type {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar .local-machine > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.sidebar .local-icon {
+  flex: none;
+}
+
+/* The scope header is at least the mockup's 84px (product.css) and grows when its row wraps. */
+.canvas-header {
+  height: auto;
+  flex-wrap: wrap;
+}
+
+.canvas-header > div:first-child {
+  flex: 1 1 150px;
+  min-width: 0;
+}
+
+.canvas-header .breadcrumb {
+  flex-wrap: wrap;
+  overflow-wrap: anywhere;
+}
+
+.canvas-header .breadcrumb > *,
+.canvas-header #scope-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.canvas-header .title-count {
+  flex: none;
+}
+
+.canvas-actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* Every edit tool stays at narrow widths (product.css hides the fifth on at 1180px). */
+.canvas-edit-tools button,
+.canvas-edit-tools button:nth-child(n + 5) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canvas-actions .live-label {
+  display: flex;
+  white-space: nowrap;
+}
+
+.canvas-actions .pause-control span {
+  display: inline;
+}
+
+.canvas-actions > .dark-button {
+  white-space: nowrap;
+}
+
+.time-chart-heading #time-context {
+  flex: 1;
+  min-width: 0;
+}
+
+.time-chart-heading #time-scale,
+.time-chart-heading select {
+  flex: none;
+}
+
+.connection-strip:not([hidden]) ~ .workspace {
+  height: auto;
+}
+
+@media (max-width: 1180px) {
+  :root {
+    --hf-03-brand-slot: 141px;
+  }
+  .appbar .view-switch {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .workspace,
+  .workspace.inspector-folded {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .appbar .brand {
+    min-width: 0;
+  }
+  .appbar {
+    flex-wrap: wrap;
+    gap: 4px 10px;
+  }
+  .appbar .view-switch {
+    margin: 0 auto;
+  }
+  .canvas-header {
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 660px) {
+  .app {
+    min-height: 620px;
+  }
+  .appbar .brand {
+    margin-right: auto;
+  }
+  .appbar .view-switch {
+    order: 1;
+    width: 100%;
+    justify-content: center;
+  }
+  .canvas-header > div:first-child {
+    flex-basis: 100%;
+  }
+  .canvas-actions {
+    justify-content: flex-start;
+  }
+  .canvas-edit-tools {
+    flex-basis: 100%;
+  }
+  .time-machine {
+    padding: 0 10px;
+  }
+  .time-header {
+    gap: 4px;
+  }
+}

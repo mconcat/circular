@@ -1,0 +1,74 @@
+{
+  "name": "circular-app",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "description": "Circular desktop app: Electron shell around the Canvas Studio surface; the daemon is a separate process.",
+  "main": "main.mjs",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.mjs",
+    "shot": "node scripts/shot.mjs",
+    "dist": "node scripts/dist.mjs"
+  },
+  "dependencies": {
+    "@circular/client": "file:../../sdk/typescript/packages/client",
+    "@circular/core": "file:../../sdk/typescript/packages/core",
+    "@circular/exports": "file:../../sdk/typescript/packages/exports",
+    "@circular/protocol": "file:../../sdk/typescript/packages/protocol",
+    "@circular/specs": "file:../../sdk/typescript/packages/specs",
+    "@circular/generator": "file:../../sdk/typescript/packages/generator"
+  },
+  "devDependencies": {
+    "electron": "44.4.3",
+    "pngjs": "7.0.0",
+    "pixelmatch": "7.1.0",
+    "electron-builder": "26.16.1"
+  },
+  "productName": "Circular",
+  "build": {
+    "appId": "app.circular.desktop",
+    "productName": "Circular",
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.developer-tools",
+      "target": [
+        "dir",
+        "dmg"
+      ],
+      "identity": null
+    },
+    "asar": false,
+    "npmRebuild": false,
+    "electronDist": "node_modules/electron/dist",
+    "files": [
+      "*.mjs",
+      "*.js",
+      "*.css",
+      "*.html",
+      "bridge/**/*",
+      "renderer/**/*",
+      "fonts/**/*",
+      "LICENSE-*"
+    ],
+    "extraResources": [
+      {
+        "from": "node_modules/@circular",
+        "to": "app/node_modules/@circular",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "../../assets/brand",
+        "to": "assets/brand",
+        "filter": [
+          "mark-dark.svg"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+#!/bin/sh
+# Sample remediator: reads the incident from stdin, "fixes" it by writing a marker file
+# into the daemon workspace (its cwd), and exits 0. Replace this with your remediation.
+# Contract: stdin is the tool call's `arguments`; stdout/stderr are captured (bounded);
+# the exit code routes the graph — non-zero goes to Slack.
+cat > incident.txt
+printf fixed > fix.txt
+exit 0

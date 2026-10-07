@@ -1,0 +1,33 @@
+#
+#
+
+name = "codex"
+
+[detect]
+candidates = ["~/.local/bin/codex", "/opt/homebrew/bin/codex", "/usr/local/bin/codex"]
+
+[invoke]
+new = [
+  "exec", "--json", "--skip-git-repo-check", "--ignore-user-config",
+  "--dangerously-bypass-approvals-and-sandbox", "{prompt}",
+]
+resume = [
+  "exec", "resume", "--json", "--skip-git-repo-check", "--ignore-user-config",
+  "--dangerously-bypass-approvals-and-sandbox", "{session}", "{prompt}",
+]
+prompt = "argument"
+
+[boundary]
+egress = ["chatgpt.com", "auth.openai.com"]
+write = ["~/.codex"]
+write_denied = [
+  "~/.codex/config.toml", "~/.codex/config.toml.bak", "~/.codex/hooks.json",
+  "~/.codex/hooks.json.bak", "~/.codex/AGENTS.md", "~/.codex/rules", "~/.codex/skills",
+  "~/.codex/plugins",
+]
+
+[output]
+format = "jsonl"
+session = { when = { type = "thread.started" }, field = "thread_id" }
+final = { when = { type = "item.completed", item = { type = "agent_message" } }, field = "item.text" }
+failure = { when = { type = "turn.failed" }, field = "error.message" }

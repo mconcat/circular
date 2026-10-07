@@ -1,0 +1,65 @@
+/* Recorded arrivals leave small instrument marks. No animation clock:
+   the existing observed page / recorded cursor supplies every mark. */
+:root {
+  --hf-08-ink: var(--data);
+  --hf-08-track: var(--line-soft);
+}
+
+/* The small rung below a basic viewer's existing density curve makes its
+   observed bins explicit. Empty bins stay on the baseline; unavailable is open. */
+.hf-08-arrival-strip {
+  display: flex;
+  align-items: end;
+  gap: 2px;
+  height: 9px;
+  flex: none;
+  padding-top: 3px;
+  border-top: 1px solid var(--hf-08-track);
+}
+.hf-08-arrival-strip > i {
+  display: block;
+  flex: 1;
+  min-width: 1px;
+  height: 1px;
+  background: var(--hf-08-track);
+}
+.hf-08-arrival-strip > i[data-arrival="true"] {
+  height: calc(2px + 7px * var(--hf-08-density));
+  background: var(--hf-08-ink);
+  opacity: calc(.4 + .6 * var(--hf-08-density));
+}
+.hf-08-arrival-strip[data-observed="false"] {
+  border-top-style: dashed;
+}
+.hf-08-arrival-strip[data-observed="false"] > i { visibility: hidden; }
+
+/* The tail's age ticks sit beside each actual row. They never stand in
+   for the separate health dot, and an empty row has no arrival tick. */
+#nodes .records-table .viewer-table-row[data-hf-08-age],
+.records-table .viewer-table-row[data-hf-08-age] {
+  position: relative;
+  padding-left: 12px;
+}
+.records-table .viewer-table-row[data-hf-08-age]::before {
+  content: "";
+  position: absolute;
+  top: calc(50% - 2.5px);
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--hf-08-ink);
+}
+.records-table .viewer-table-row[data-hf-08-age="0"]::before { opacity: 1; }
+.records-table .viewer-table-row[data-hf-08-age="1"]::before { opacity: .68; }
+.records-table .viewer-table-row[data-hf-08-age="2"]::before { opacity: .43; }
+.records-table .viewer-table-row[data-hf-08-age="3"]::before { opacity: .25; }
+.records-table .viewer-table-row[data-hf-08-age="none"]::before { display: none; }
+
+/* Preserve the existing state words and diagnostics. A square quiet mark and
+   an open unobserved mark separate these from actual arrival traces. */
+.node-state[data-state="idle"] > .tiny-dot { border-radius: 1px; }
+.node-state[data-state="unobserved"] > .tiny-dot {
+  outline: 1px solid currentColor;
+  outline-offset: 1px;
+}

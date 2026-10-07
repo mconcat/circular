@@ -1,0 +1,48 @@
+{
+  "name": "@circular/protocol",
+  "version": "0.1.0",
+  "files": [
+    "src"
+  ],
+  "type": "module",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    },
+    "./establishment": {
+      "types": "./src/establishment.d.ts",
+      "import": "./src/establishment.js"
+    },
+    "./declaration": {
+      "types": "./src/declaration.d.ts",
+      "import": "./src/declaration.js"
+    },
+    "./authoring-query": {
+      "types": "./src/authoring-query.d.ts",
+      "import": "./src/authoring-query.js"
+    },
+    "./subscription": {
+      "types": "./src/subscription-values.d.ts",
+      "import": "./src/subscription-values.js"
+    },
+    "./actor-query": {
+      "types": "./src/actor-query.d.ts",
+      "import": "./src/actor-query.js"
+    },
+    "./authoring-values": {
+      "types": "./src/authoring-values.d.ts",
+      "import": "./src/authoring-values.js"
+    },
+    "./internal/declaration-rows": {
+      "types": "./src/internal/declaration-rows.d.ts",
+      "import": "./src/internal/declaration-rows.js"
+    },
+    "./tables": {
+      "types": "./src/tables.generated.d.ts",
+      "import": "./src/tables.generated.js"
+    }
+  },
+  "sideEffects": false
+}

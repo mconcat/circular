@@ -1,0 +1,17 @@
+#
+#
+
+secrets = [
+  "~/.ssh",
+  "~/.aws",
+  "~/.config/gcloud",
+  "~/Library/Keychains",
+  "~/Library/Application Support/Google/Chrome",
+  "~/Library/Application Support/Firefox",
+  "~/Library/Application Support/BraveSoftware",
+  "~/Library/Application Support/Arc",
+  "~/Library/Application Support/Microsoft Edge",
+  "~/Library/Safari",
+  "~/Library/Cookies",
+  "~/Library/Application Support/Circular",
+]

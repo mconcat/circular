@@ -1,0 +1,7 @@
+{
+  "alerts": [{
+    "fingerprint": "incident-1",
+    "labels": { "fault_flag": "paymentFailure", "alertname": "Payment errors" }
+  }],
+  "status": "firing"
+}

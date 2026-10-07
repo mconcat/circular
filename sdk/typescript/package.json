@@ -1,0 +1,69 @@
+{
+  "name": "@circular/cli",
+  "version": "0.1.0-alpha.1",
+  "description": "Circular command line: open an agent session on a running pipeline, edit it as SDK code, manage the daemon for a state, diagnose an installation, and deploy shipped templates. The daemon binary is installed separately.",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "circular": "./circular.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "circular.mjs",
+    "build-info.json",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "chat/",
+    "cli/",
+    "edit/",
+    "templates/agent-session-monitor/*.mjs",
+    "!templates/agent-session-monitor/*.test.mjs",
+    "templates/agent-session-monitor/README.md",
+    "templates/incident-autopilot/*.mjs",
+    "!templates/incident-autopilot/*.test.mjs",
+    "templates/incident-autopilot/README.md",
+    "templates/incident-autopilot/bin/",
+    "templates/incident-autopilot/sample-incident.json",
+    "templates/otel-astronomy/*.mjs",
+    "!templates/otel-astronomy/*.test.mjs",
+    "templates/otel-astronomy/program.ts",
+    "templates/otel-astronomy/README.md",
+    "templates/otel-astronomy/bin/",
+    "scripts/write-build-info.mjs",
+    "scripts/copy-public-instructions.mjs",
+    "INSTALL.md"
+  ],
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "check:types": "tsc --project tsconfig.json",
+    "test": "node --test",
+    "prepack": "node scripts/write-build-info.mjs && node scripts/copy-public-instructions.mjs",
+    "pack:cli": "npm pack --pack-destination dist"
+  },
+  "dependencies": {
+    "@circular/authoring": "0.1.0",
+    "@circular/client": "0.1.0",
+    "@circular/core": "0.1.0",
+    "@circular/exports": "0.1.0",
+    "@circular/protocol": "0.1.0",
+    "@circular/specs": "0.1.0",
+    "@circular/generator": "0.1.0"
+  },
+  "bundleDependencies": [
+    "@circular/authoring",
+    "@circular/client",
+    "@circular/core",
+    "@circular/exports",
+    "@circular/generator",
+    "@circular/protocol",
+    "@circular/specs",
+    "typescript"
+  ],
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}

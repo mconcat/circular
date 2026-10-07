@@ -1,0 +1,458 @@
+#nodes .node-header .node-titles,
+#nodes .node-header .node-icon,
+#nodes .node-header .node-life,
+#nodes .node-header .viewer-toggle,
+#nodes .node-state,
+#nodes .node-inline-editor,
+#nodes .resize-dimensions,
+#nodes .node-resize,
+#nodes .node-viewer > *,
+#nodes .node-port > span:last-child,
+.wire-component > * {
+  zoom: var(--hf-09-symbol-scale, 1);
+}
+
+#nodes .node-port > span:last-child[hidden] {
+  display: none;
+}
+.wire-component .component-caption {
+  visibility: hidden;
+}
+.wire-component:is(:hover, :focus-visible, .selected) .component-caption {
+  visibility: visible;
+}
+/* These passive readings own hover detail even in View mode. Restoring hit
+   testing on them does not enable a view's inputs or action buttons. */
+#nodes .records-table .viewer-table-row > span:last-child,
+#nodes .node-viewer .number-content,
+#nodes .node-viewer .timing-content,
+#nodes .node-viewer .viewer-reading,
+#nodes .node-viewer .scope-summary,
+#nodes .node-viewer .instance-summary,
+#nodes .node-viewer[data-viewer="routing"] .result-table,
+#nodes .node-viewer .task-content,
+#nodes .node-viewer > .glance > [data-cell] {
+  pointer-events: auto;
+}
+
+/* detail: header and body reserve the same screen space as the compensated
+   symbols; otherwise a readable title would collide with the latest
+   observation. */
+#canvas[data-tier="detail"] #nodes .node-header {
+  height: calc(45px * var(--hf-09-symbol-scale, 1));
+  padding: calc(8px * var(--hf-09-symbol-scale, 1)) calc(10px * var(--hf-09-symbol-scale, 1));
+  gap: calc(6px * var(--hf-09-symbol-scale, 1));
+}
+#canvas[data-tier="detail"] #nodes .node-header .node-type {
+  margin-top: 0;
+  line-height: 1.15;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#canvas[data-tier="detail"] #nodes .node-state {
+  top: 49px;
+  left: 10px;
+  right: 10px;
+  margin: 0;
+  min-width: 0;
+  line-height: 16px;
+  white-space: nowrap;
+}
+#canvas[data-tier="detail"] #nodes .node-viewer {
+  top: calc(70px * var(--hf-09-symbol-scale, 1));
+  left: calc(10px * var(--hf-09-symbol-scale, 1));
+  right: calc(10px * var(--hf-09-symbol-scale, 1));
+  gap: calc(6px * var(--hf-09-symbol-scale, 1));
+}
+#canvas[data-tier="detail"] .node.has-inline-editor {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: calc((var(--resize-handle) - 2px) * var(--hf-09-symbol-scale, 1));
+}
+#canvas[data-tier="detail"] .node.has-inline-editor > .node-header {
+  flex: none;
+}
+#canvas[data-tier="detail"] .node.has-inline-editor > .node-inline-editor {
+  display: flex;
+  visibility: hidden;
+}
+#canvas[data-tier="detail"] .node.is-interactive.has-inline-editor:not([data-settings-short]) > .node-inline-editor {
+  visibility: visible;
+}
+#canvas[data-tier="detail"] .node.is-interactive.has-inline-editor:not([data-settings-short]) > .node-status-note {
+  display: none;
+}
+#canvas[data-tier="detail"] .node.has-inline-editor[data-settings-short] .viewer-toggle {
+  display: none;
+}
+
+/* reduced and names: the header keeps the name and health; the mode, the
+   settings, the state row, the ports' names and a chip's kind and caption
+   are detail. Ports stay, dimmed until the card is pointed at or a wire is
+   being drawn. */
+#canvas:not([data-tier="detail"]) #nodes :is(.node-type, .node-icon, .node-state, .node-port > span:last-child),
+#canvas:not([data-tier="detail"]) :is(.viewer-toggle, .component-caption, .component-edit-toggle),
+#canvas:not([data-tier="detail"]) .node.is-interactive.has-inline-editor > .node-inline-editor {
+  display: none;
+}
+#canvas:not([data-tier="detail"]) .node.is-interactive.has-inline-editor > .node-viewer {
+  display: flex;
+  pointer-events: none;
+  user-select: none;
+}
+#canvas:not([data-tier="detail"]) #nodes .node-port {
+  opacity: 0.4;
+}
+#canvas:not([data-tier="detail"]) #nodes .node:hover .node-port,
+#canvas.connecting:not([data-tier="detail"]) #nodes .node-port {
+  opacity: 1;
+}
+#canvas:not([data-tier="detail"]) .component-editor {
+  display: none;
+}
+#canvas.connecting:not([data-tier="detail"]) .component-editor {
+  display: block;
+}
+
+/* reduced and names: the card is one column, its header and then its view. */
+#canvas:not([data-tier="detail"]) #nodes .node {
+  display: flex;
+  flex-direction: column;
+}
+#nodes .viewer-places {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  flex: none;
+  min-width: 0;
+  min-height: var(--resize-handle);
+  padding-right: calc(var(--resize-handle) - var(--viewer-inset, 0px) - 3px / var(--hf-09-symbol-scale, 1));
+}
+#nodes .node .node-viewer .viewer-places > :not(button) {
+  flex: 1 1 0;
+  min-width: var(--resize-handle);
+  min-height: 0;
+}
+#nodes .node .node-viewer .viewer-places > button {
+  position: static;
+  flex: none;
+  align-self: flex-end;
+  display: grid;
+  place-items: center;
+  width: var(--resize-handle);
+  height: var(--resize-handle);
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+
+/* reduced: the header grows to the lines its name takes, and the live view
+   has the rest. The default card size holds the name in those lines, and
+   one row of the view under them, at the tier's least zoom
+   (renderer/card-size.mjs). */
+#canvas[data-tier="reduced"] #nodes .node-header {
+  flex: none;
+  height: auto;
+  min-height: calc(26px * var(--hf-09-symbol-scale, 1));
+  padding: calc(4px * var(--hf-09-symbol-scale, 1)) calc(6px * var(--hf-09-symbol-scale, 1));
+  gap: calc(5px * var(--hf-09-symbol-scale, 1));
+  border-bottom: 0;
+}
+#canvas[data-tier="reduced"] #nodes .node-title {
+  white-space: normal;
+  overflow-wrap: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--card-title-lines);
+}
+#canvas[data-tier="reduced"] #nodes .node-viewer {
+  --viewer-inset: 6px;
+  position: relative;
+  inset: auto;
+  flex: 1 1 0;
+  min-height: 0;
+  margin: 0 calc(var(--viewer-inset) * var(--hf-09-symbol-scale, 1)) calc(5px * var(--hf-09-symbol-scale, 1));
+  gap: calc(6px * var(--hf-09-symbol-scale, 1));
+}
+
+#canvas:not([data-tier="names"]) #nodes .node-viewer {
+  overflow-y: auto;
+}
+#nodes .node-viewer::-webkit-scrollbar {
+  width: calc(10px * var(--hf-09-symbol-scale, 1));
+}
+#nodes .node-viewer::-webkit-scrollbar-thumb {
+  min-height: calc(24px * var(--hf-09-symbol-scale, 1));
+  border-width: calc(2px * var(--hf-09-symbol-scale, 1));
+  border-radius: calc(5px * var(--hf-09-symbol-scale, 1));
+}
+
+#canvas[data-tier="names"] #nodes .node > :is(.node-inline-editor, .node-state, .resize-dimensions) {
+  display: none;
+}
+/* The header is the card's face under its view: what a press drags the card
+   by. The name above it takes no press, so a name painted over another card
+   never takes that card's. */
+#canvas[data-tier="names"] #nodes .node-header {
+  position: absolute;
+  inset: 0;
+  height: auto;
+  padding: 0;
+  border-bottom: 0;
+  border-radius: inherit;
+}
+#canvas[data-tier="names"] #nodes .node-titles {
+  position: absolute;
+  inset: auto 0 100%;
+  padding-bottom: 1px;
+  /* The name's own line height is each line's (the name is the block's one inline run). */
+  line-height: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+#canvas[data-tier="names"] #nodes .node-title {
+  white-space: normal;
+  overflow-wrap: normal;
+  overflow: visible;
+  text-overflow: clip;
+  /* The name is read over whatever it is painted on (a wire, another card's foot): its glyph runs
+     stand on the plate a port's name has, as a label on the canvas outside a card. */
+  display: inline;
+  background: color-mix(in srgb, var(--canvas) 86.27%, transparent);
+}
+#canvas[data-tier="names"] #nodes .node-life {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  margin: 0;
+}
+/* The body's head inset is the dot's room (5px, 1px from the corner). */
+#canvas[data-tier="names"] #nodes .node-viewer {
+  --viewer-inset: 2px;
+  position: relative;
+  inset: auto;
+  flex: 1 1 0;
+  min-height: 0;
+  margin: calc(7px * var(--hf-09-symbol-scale, 1)) calc(var(--viewer-inset) * var(--hf-09-symbol-scale, 1)) calc(var(--viewer-inset) * var(--hf-09-symbol-scale, 1));
+  gap: calc(6px * var(--hf-09-symbol-scale, 1));
+}
+/* The face takes the press wherever the body draws no input place: on a card
+   in View mode and on a card that does not hold one control (data-places,
+   app.js nodeHTML), a press selects the card and a drag moves it. A body's
+   readings keep their hover detail above this tier, where the header is the
+   card's own strip. */
+#canvas[data-tier="names"] #nodes .node:is(:not(.is-interactive), [data-places="none"]) :is(.node-viewer, .node-viewer *) {
+  pointer-events: none;
+}
+/* The far body has no room for a scroll bar; what a block holds beyond its room still scrolls. */
+#canvas[data-tier="names"] #nodes .node-viewer * {
+  scrollbar-width: none;
+}
+
+#canvas:not([data-tier="detail"]) #nodes .node-viewer {
+  --viewer-overflow-wrap: normal;
+  overflow-wrap: normal;
+}
+
+#canvas:not([data-tier="detail"]) #nodes .node > .node-status-note {
+  position: static;
+  flex: none;
+  zoom: var(--hf-09-symbol-scale, 1);
+  margin: 0 2px 2px;
+  padding: 1px 6px;
+  flex-wrap: wrap;
+  column-gap: 5px;
+  overflow-wrap: normal;
+}
+
+#nodes .node-viewer > .glance {
+  --glance-line: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  min-height: 0;
+  max-height: round(down, 100%, var(--glance-line));
+  overflow: hidden;
+  font-size: 11px;
+  line-height: var(--glance-line);
+  color: var(--muted);
+  overflow-wrap: normal;
+}
+#canvas[data-tier="reduced"] #nodes .node-viewer > .glance {
+  overflow-y: auto;
+}
+#nodes .node-viewer > .glance::-webkit-scrollbar {
+  width: 10px;
+}
+#nodes .node-viewer > .glance > * {
+  flex: none;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+#nodes .glance-reading {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  color: var(--ink);
+}
+#nodes .glance-reading small {
+  /* A caption of another size takes no height of its own, so the line stays one glance line high. */
+  line-height: 0;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+#nodes .glance-reading.lead {
+  font-size: 24px;
+  line-height: calc(2 * var(--glance-line));
+  letter-spacing: -0.5px;
+}
+#nodes .glance-words {
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#nodes .glance-words > b {
+  font-weight: 600;
+  color: var(--ink);
+}
+/* At the names tier every cell is one line, which gives way at its end, marked. */
+#canvas[data-tier="names"] #nodes .glance-words {
+  white-space: nowrap;
+}
+#nodes .glance-rows > p {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+}
+#nodes .glance-rows > p > * {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#nodes .glance-rows > p > span {
+  flex: 0 1 auto;
+  max-width: 65%;
+}
+#nodes .glance-rows > p > span:only-child {
+  max-width: none;
+}
+#nodes .glance-rows > p > b {
+  flex: 1 1 0;
+  text-align: right;
+  font-weight: 500;
+  color: var(--ink);
+}
+#nodes .glance-spark {
+  width: 100%;
+  height: calc(2 * var(--glance-line));
+}
+
+/* Chips: the button is the chip's footprint at the symbol scale; below the
+   detail tier its face is the step's icon alone, at detail the icon and the
+   kind. */
+.wire-component {
+  width: calc(64px * var(--hf-09-symbol-scale, 1));
+  height: calc(28px * var(--hf-09-symbol-scale, 1));
+}
+/* The chip's edit toggle (detail) is a symbol beside the face: its size, like
+   its offset from the chip (app.js positionComponent), is under the scale. */
+.component-edit-toggle {
+  width: calc(20px * var(--hf-09-symbol-scale, 1));
+  height: calc(20px * var(--hf-09-symbol-scale, 1));
+}
+.component-edit-toggle > * {
+  zoom: var(--hf-09-symbol-scale, 1);
+}
+#canvas:not([data-tier="detail"]) .wire-component {
+  width: calc(26px * var(--hf-09-symbol-scale, 1));
+}
+#canvas:not([data-tier="detail"]) .component-core {
+  width: 26px;
+  padding: 0;
+  gap: 0;
+}
+#canvas:not([data-tier="detail"]) .component-core strong {
+  display: none;
+}
+/* names: a chip keeps its world footprint. The flow gives each step one
+   room of its own (renderer/combinators.mjs chipPlaces, STEP_ROOM); below
+   the reduced tier an icon at the symbol scale is wider than that room and
+   would cover its neighbours and the card it leads into. */
+#canvas[data-tier="names"] .wire-component {
+  width: 26px;
+  height: 28px;
+}
+#canvas[data-tier="names"] .wire-component > * {
+  zoom: 1;
+}
+
+/* Notes: their text and controls keep their screen size by the same
+   factor; the note's box, its padding and the gap under its header stay in
+   world space, so a note pulled back keeps its room for the text. */
+#annotations .annotation {
+  font-size: calc(100% * var(--hf-09-symbol-scale, 1));
+}
+#annotations .annotation header {
+  font-size: calc(9px * var(--hf-09-symbol-scale, 1));
+}
+#annotations .annotation textarea {
+  /* The header's one line (9px at the body's 1.45 line height) and its 9px gap. */
+  height: calc(100% - 9px - 13px * var(--hf-09-symbol-scale, 1));
+}
+/* reduced and names: a note's text is what it says, as a card's name is.
+   Its header is its drag strip alone — the word and the delete are detail
+   chrome, not drawn here (no tier changes a text's size) — and stands over
+   the note's top edge, so the text has the box. */
+#canvas:not([data-tier="detail"]) #annotations .annotation header {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: calc(12px * var(--hf-09-symbol-scale, 1));
+  margin: 0;
+}
+#canvas:not([data-tier="detail"]) #annotations .annotation header > :is(span, button) {
+  display: none;
+}
+#canvas:not([data-tier="detail"]) #annotations .annotation textarea {
+  height: 100%;
+}
+#annotations .annotation .note-resize {
+  width: calc(20px * var(--hf-09-symbol-scale, 1));
+  height: calc(20px * var(--hf-09-symbol-scale, 1));
+}
+
+/* The local coordinate and recorded kind/value share the row. Time is secondary;
+   the full record is also available in the row's detail. */
+#nodes .records-table .viewer-table-head,
+#nodes .records-table .viewer-table-row {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 3px 8px;
+}
+#nodes .records-table .viewer-table-row > span:first-child {
+  font-size: 10px;
+  color: var(--ink);
+}
+#nodes .records-table .viewer-table-head > span:last-child,
+#nodes .records-table .record-kind,
+#nodes .records-table .record-value {
+  text-align: left;
+}
+#nodes .records-table .record-kind {
+  color: var(--ink);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#nodes .records-table .viewer-table-row > span:last-child {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+#nodes .records-table [data-has-kind="false"] .record-value { color: var(--ink); }

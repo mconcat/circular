@@ -1,0 +1,40 @@
+#
+#
+#
+
+name = "claude"
+
+[detect]
+candidates = [
+  "~/.local/bin/claude", "~/.claude/local/claude",
+  "/opt/homebrew/bin/claude", "/usr/local/bin/claude",
+]
+
+[invoke]
+new = [
+  "-p", "--output-format", "json", "--strict-mcp-config",
+  "--permission-mode", "bypassPermissions",
+  "--settings", '{"disableAllHooks":true,"sandbox":{"enabled":false}}',
+]
+resume = [
+  "-p", "--output-format", "json", "--strict-mcp-config",
+  "--permission-mode", "bypassPermissions",
+  "--settings", '{"disableAllHooks":true,"sandbox":{"enabled":false}}',
+  "--resume", "{session}",
+]
+prompt = "stdin"
+
+[env]
+remove = ["ANTHROPIC_API_KEY"]
+set = { CLAUDE_CODE_TMPDIR = "{tmp}", CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1" }
+
+[boundary]
+egress = ["api.anthropic.com", "platform.claude.com"]
+write = ["~/.claude/projects"]
+login = ["~/Library/Keychains/login.keychain-db"]
+
+[output]
+format = "jsonl"
+session = { when = { type = "result" }, field = "session_id" }
+final = { when = { type = "result" }, field = "result" }
+failure = { when = { type = "result", is_error = true }, field = "result" }

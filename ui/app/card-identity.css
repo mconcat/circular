@@ -1,0 +1,73 @@
+/* A node is an instrument: a short identity strip and a useful body.
+   These rules use the existing view registration's data-viewer slot. Authored
+   card dimensions, port positions, hit areas and the zoom policy stay intact. */
+
+/* The catalog icon and type sit beside the authored name. The zoom tiers reserve
+   their space with the same zoom compensation as the body (the detail tier's
+   header, zoom-tiers.css). */
+#nodes .node-header .viewer-toggle {
+  width: 24px;
+  height: 24px;
+  margin-right: 0;
+}
+
+/* Meter: value and its unit share a baseline. Long labels wrap beside the
+   reading without making the number smaller or clipping Korean text. */
+#nodes .node-viewer .number-content {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  flex: none;
+  min-width: 0;
+}
+
+#nodes .node-viewer .number-content > strong {
+  flex: 0 1 auto;
+  min-width: 0;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+#nodes .node-viewer .number-content > span {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Scope: the plot owns the remainder of the body after the numeric reading. */
+#nodes .node-viewer[data-viewer="trend"] .viewer-spark {
+  flex: 1 1 40px;
+  min-height: 20px;
+}
+
+/* Record/tail: available card height belongs to the rows. The existing view
+   interpreters choose complete visible rows from their recorded observations. */
+#nodes .node-viewer > .result-table,
+#nodes .node-viewer > .viewer-table,
+#nodes .node-viewer > .value-content,
+#nodes .node-viewer > .viewer-document {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+#nodes .node-viewer > .viewer-table {
+  overflow: hidden;
+}
+
+#nodes .node-viewer > .viewer-message,
+#nodes .node-viewer > .viewer-action {
+  flex: none;
+}
+
+#nodes .node-viewer > .viewer-message {
+  margin-block: 0;
+}
+
+/* A declared shape or its unavailable reason occupies the kicker's secondary
+   slot. The title exposes text that does not fit beside RECORD STREAM. */
+#nodes .node-viewer[data-viewer="transcript"] > .viewer-kicker > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

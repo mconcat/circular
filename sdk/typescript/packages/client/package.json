@@ -1,0 +1,51 @@
+{
+  "name": "@circular/client",
+  "version": "0.1.0",
+  "files": [
+    "src"
+  ],
+  "type": "module",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    },
+    "./correlation": {
+      "types": "./src/correlation.d.ts",
+      "import": "./src/correlation.js"
+    },
+    "./canonical-frame": {
+      "types": "./src/canonical-frame.d.ts",
+      "import": "./src/canonical-frame.js"
+    },
+    "./observability": {
+      "types": "./src/observability.d.ts",
+      "import": "./src/observability.js"
+    },
+    "./owner-local": {
+      "types": "./src/owner-local.d.ts",
+      "import": "./src/owner-local.js"
+    },
+    "./replay": {
+      "types": "./src/replay.d.ts",
+      "import": "./src/replay.js"
+    },
+    "./internal/execution": {
+      "types": "./src/internal/execution.d.ts",
+      "import": "./src/internal/execution.js"
+    },
+    "./subscription": {
+      "types": "./src/subscription.d.ts",
+      "import": "./src/subscription.js"
+    },
+    "./epoch-runner": {
+      "types": "./src/epoch-runner.d.ts",
+      "import": "./src/epoch-runner.js"
+    }
+  },
+  "dependencies": {
+    "@circular/protocol": "0.1.0"
+  },
+  "sideEffects": false
+}

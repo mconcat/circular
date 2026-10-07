@@ -1,0 +1,114 @@
+#inspector {
+  container: hf-07-inspector / inline-size;
+}
+
+#inspector .inspector-identity > div {
+  min-width: 0;
+}
+#inspector .inspector-identity .node-icon {
+  flex: none;
+}
+#inspector .inspector-identity h2,
+#inspector .inspector-identity .node-type {
+  overflow-wrap: anywhere;
+}
+
+#inspector .detail-section {
+  margin-bottom: 16px;
+}
+#inspector .detail-heading {
+  justify-content: flex-start;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+#inspector .detail-heading::after {
+  content: "";
+  height: 1px;
+  background: var(--line);
+  flex: 1;
+  min-width: 8px;
+}
+#inspector .detail-heading h3 {
+  font-size: 11px;
+  font-weight: 500;
+}
+#inspector .detail-heading > :not(h3) {
+  order: 1;
+  flex: none;
+}
+#inspector .detail-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: baseline;
+  gap: 10px;
+  padding-block: 6px;
+  border-bottom: 1px solid var(--line-soft);
+}
+#inspector .detail-row > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#inspector .detail-row > span:last-child {
+  color: var(--ink);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+#inspector .inspector-port-row {
+  padding-block: 7px;
+  gap: 6px;
+}
+#inspector .inspector-port-row > span:not(.port-jack) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#inspector .inspector-port-row > .port-jack,
+#inspector .inspector-port-row > .icon {
+  flex: none;
+}
+
+#inspector .config-local-note {
+  max-width: none;
+  margin-block: 12px;
+  font-size: 11px;
+}
+
+#inspector .wire-inspector-subtitle {
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+#inspector .wire-summary {
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+#inspector .processing-caption {
+  gap: 8px;
+  margin-bottom: 8px;
+}
+#inspector .processing-caption > span {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+#inspector .inspector-footer {
+  flex-wrap: wrap;
+}
+#inspector .inspector-footer > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#inspector .inspector-footer > button {
+  min-height: 24px;
+}
+
+@container hf-07-inspector (max-width: 290px) {
+  #inspector .detail-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+  #inspector .detail-row > span:last-child {
+    text-align: left;
+  }
+  #inspector .inspector-port-row {
+    flex-wrap: wrap;
+  }
+}

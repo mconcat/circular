@@ -1,0 +1,950 @@
+{
+  "pin": {"kind":"catalog content hash; not spec_set","sha256_8":"1b6d60a4"},
+  "response": [
+    "1n",
+    {
+      "anchor": [
+        "route",
+        "pipeline_actor",
+        "debounce",
+        "alert",
+        "tap",
+        "input",
+        "output",
+        "replicator",
+        "agent",
+        "counter",
+        "ema",
+        "windowed_reduce",
+        "timer",
+        "tool_executor",
+        "notify",
+        "peer",
+        "listener",
+        "keyed_reduce",
+        "request",
+        "file",
+        "json",
+        "otlp",
+        "match",
+        "assemble",
+        "join",
+        "form"
+      ],
+      "items": [
+        {
+          "actor_type": "route",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Send each event to the case its value matches, or to unmatched.",
+          "in_ports": [
+            {
+              "id": "event",
+              "primary": true
+            }
+          ],
+          "label": "Route",
+          "out_ports": [
+            {
+              "id": "unmatched",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": "config-dependent ports require the authored config fold through admission; the static catalog publishes registered fixed ports only",
+          "presentation_role": [
+            "1n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Destinations",
+            "rows": "outlets"
+          }
+        },
+        {
+          "actor_type": "pipeline_actor",
+          "config_schema": "1n",
+          "creatable": false,
+          "description": "Hold a group of actors in one card, with its own inputs and outputs.",
+          "in_ports": [],
+          "label": "Pipeline",
+          "out_ports": [],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "4n",
+            "one"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "pipeline_actor creation requires a paired authored scope declaration",
+          "view_config": {
+            "count_label": "actors"
+          }
+        },
+        {
+          "actor_type": "debounce",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Wait until events stop for a while, then pass on the latest one.",
+          "in_ports": [
+            {
+              "id": "event",
+              "primary": true
+            }
+          ],
+          "label": "Debounce",
+          "out_ports": [
+            {
+              "id": "event",
+              "primary": true
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "2n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "count_label": "values released"
+          }
+        },
+        {
+          "actor_type": "alert",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Check a condition on each event, and report when the alert starts firing and when it recovers.",
+          "in_ports": [
+            {
+              "id": "event",
+              "primary": true
+            }
+          ],
+          "label": "Alert",
+          "out_ports": [
+            {
+              "id": "event",
+              "primary": true
+            },
+            {
+              "id": "transition",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "1n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Condition"
+          }
+        },
+        {
+          "actor_type": "tap",
+          "config_schema": "1n",
+          "creatable": true,
+          "description": "Pass events through unchanged, so you can watch them.",
+          "in_ports": [
+            {
+              "id": "event",
+              "primary": true
+            }
+          ],
+          "label": "Tap",
+          "out_ports": [
+            {
+              "id": "event",
+              "primary": true
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "2n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": null,
+          "view_config": {
+            "heading": "Record stream",
+            "side": "arrivals"
+          }
+        },
+        {
+          "actor_type": "input",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Add an input to the pipeline this actor is in.",
+          "in_ports": [],
+          "label": "Input",
+          "out_ports": [],
+          "ports_unavailable_reason": "config-dependent ports require the authored config fold through admission; the static catalog publishes registered fixed ports only",
+          "presentation_role": [
+            "3n",
+            "source"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": null
+        },
+        {
+          "actor_type": "output",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Add an output to the pipeline this actor is in.",
+          "in_ports": [],
+          "label": "Output",
+          "out_ports": [],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "3n",
+            "sink"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "side": "arrivals",
+            "spark": "none"
+          }
+        },
+        {
+          "actor_type": "replicator",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Run one copy of a group of actors for each key the events carry.",
+          "in_ports": [
+            {
+              "id": "event",
+              "primary": true
+            }
+          ],
+          "label": "Replicator",
+          "out_ports": [],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "4n",
+            "keyed_many"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "count_label": "current instances",
+            "heading": "Dynamic scope"
+          }
+        },
+        {
+          "actor_type": "agent",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Hand each turn to an external agent program, one turn at a time.",
+          "in_ports": [
+            {
+              "id": "turn",
+              "primary": true
+            },
+            {
+              "id": "tool_result",
+              "primary": false
+            }
+          ],
+          "label": "Agent",
+          "out_ports": [
+            {
+              "id": "record",
+              "primary": false
+            },
+            {
+              "id": "tool_request",
+              "primary": false
+            },
+            {
+              "id": "result",
+              "primary": true
+            },
+            {
+              "id": "_error",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "1n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Current work"
+          }
+        },
+        {
+          "actor_type": "counter",
+          "config_schema": "1n",
+          "creatable": true,
+          "description": "Count the events that arrive.",
+          "in_ports": [
+            {
+              "id": "event",
+              "primary": true
+            }
+          ],
+          "label": "Counter",
+          "out_ports": [
+            {
+              "id": "count",
+              "primary": true
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "1n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": null,
+          "view_config": {
+            "heading": "Accepted arrivals",
+            "side": "emitted",
+            "spark": "none"
+          }
+        },
+        {
+          "actor_type": "ema",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Smooth incoming numbers into a moving average.",
+          "in_ports": [
+            {
+              "id": "sample",
+              "primary": true
+            }
+          ],
+          "label": "EMA",
+          "out_ports": [
+            {
+              "id": "ema",
+              "primary": true
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "2n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "count_label": "samples",
+            "heading": "Weighted mean",
+            "side": "emitted",
+            "spark": "samples"
+          }
+        },
+        {
+          "actor_type": "windowed_reduce",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Combine the numbers from a recent time window, at a regular interval.",
+          "in_ports": [
+            {
+              "id": "sample",
+              "primary": true
+            }
+          ],
+          "label": "Windowed Reduce",
+          "out_ports": [],
+          "ports_unavailable_reason": "config-dependent ports require the authored config fold through admission; the static catalog publishes registered fixed ports only",
+          "presentation_role": [
+            "2n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "caption": "Current window",
+            "heading": "Window aggregate",
+            "side": "emitted",
+            "spark": "samples"
+          }
+        },
+        {
+          "actor_type": "timer",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Send a numbered tick at a fixed interval.",
+          "in_ports": [
+            {
+              "id": "bang",
+              "primary": true
+            }
+          ],
+          "label": "Timer",
+          "out_ports": [
+            {
+              "id": "tick",
+              "primary": true
+            },
+            {
+              "id": "_error",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "3n",
+            "source"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "count_label": "ticks emitted",
+            "heading": "Periodic ticks"
+          }
+        },
+        {
+          "actor_type": "tool_executor",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Run the file and program tools you allow, one call at a time.",
+          "in_ports": [
+            {
+              "id": "call",
+              "primary": true
+            }
+          ],
+          "label": "Tool Executor",
+          "out_ports": [
+            {
+              "id": "result",
+              "primary": true
+            },
+            {
+              "id": "_error",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "1n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Tool activity"
+          }
+        },
+        {
+          "actor_type": "notify",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Send you notifications, no more often than an interval you set.",
+          "in_ports": [
+            {
+              "id": "notification",
+              "primary": true
+            }
+          ],
+          "label": "Notify",
+          "out_ports": [
+            {
+              "id": "_error",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "3n",
+            "sink"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Latest notification"
+          }
+        },
+        {
+          "actor_type": "peer",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Send and receive messages with other agent sessions.",
+          "in_ports": [
+            {
+              "id": "send",
+              "primary": true
+            },
+            {
+              "id": "refresh",
+              "primary": false
+            }
+          ],
+          "label": "Peer",
+          "out_ports": [
+            {
+              "id": "message",
+              "primary": true
+            },
+            {
+              "id": "peers",
+              "primary": false
+            },
+            {
+              "id": "delivery",
+              "primary": false
+            },
+            {
+              "id": "binding",
+              "primary": false
+            },
+            {
+              "id": "_error",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "1n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Peer connection"
+          }
+        },
+        {
+          "actor_type": "listener",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Follow new lines in files on this computer, and send them again from the start on request.",
+          "in_ports": [
+            {
+              "id": "control",
+              "primary": true
+            }
+          ],
+          "label": "Listener",
+          "out_ports": [
+            {
+              "id": "line",
+              "primary": true
+            },
+            {
+              "id": "_error",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "3n",
+            "source"
+          ],
+          "source": true,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Incoming lines",
+            "side": "emitted"
+          }
+        },
+        {
+          "actor_type": "keyed_reduce",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Keep a running total for each key, with the overall sum and the number of keys.",
+          "in_ports": [
+            {
+              "id": "event",
+              "primary": true
+            },
+            {
+              "id": "remove",
+              "primary": false
+            }
+          ],
+          "label": "Keyed Reduce",
+          "out_ports": [
+            {
+              "id": "map",
+              "primary": true
+            },
+            {
+              "id": "total",
+              "primary": false
+            },
+            {
+              "id": "count",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "1n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Values by key",
+            "rows": "latest",
+            "total": {
+              "outlet": "total",
+              "path": []
+            }
+          }
+        },
+        {
+          "actor_type": "request",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Send one HTTP request for each event.",
+          "in_ports": [
+            {
+              "id": "event",
+              "primary": true
+            }
+          ],
+          "label": "Request",
+          "out_ports": [
+            {
+              "id": "response",
+              "primary": true
+            },
+            {
+              "id": "_error",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "3n",
+            "sink"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "fields": {
+              "status": [
+                "status"
+              ],
+              "value": [
+                "body"
+              ]
+            },
+            "heading": "Response",
+            "side": "emitted",
+            "spark": "none"
+          }
+        },
+        {
+          "actor_type": "file",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Read or replace the whole contents of one file.",
+          "in_ports": [
+            {
+              "id": "write",
+              "primary": true
+            },
+            {
+              "id": "read",
+              "primary": false
+            }
+          ],
+          "label": "File",
+          "out_ports": [
+            {
+              "id": "content",
+              "primary": true
+            },
+            {
+              "id": "written",
+              "primary": false
+            },
+            {
+              "id": "_error",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "1n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Content"
+          }
+        },
+        {
+          "actor_type": "json",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Send a value you write, at start and whenever asked.",
+          "in_ports": [
+            {
+              "id": "set",
+              "primary": false
+            },
+            {
+              "id": "bang",
+              "primary": true
+            }
+          ],
+          "label": "JSON",
+          "out_ports": [
+            {
+              "id": "value",
+              "primary": true
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "3n",
+            "source"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Stored value",
+            "side": "emitted",
+            "spark": "none"
+          }
+        },
+        {
+          "actor_type": "otlp",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Receive OpenTelemetry logs and metrics sent over HTTP to an address on this computer.",
+          "in_ports": [],
+          "label": "OTLP",
+          "out_ports": [
+            {
+              "id": "logs",
+              "primary": false
+            },
+            {
+              "id": "metrics",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "3n",
+            "source"
+          ],
+          "source": true,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Telemetry",
+            "side": "emitted"
+          }
+        },
+        {
+          "actor_type": "match",
+          "config_schema": "1n",
+          "creatable": true,
+          "description": "Split results into successes and failures.",
+          "in_ports": [
+            {
+              "id": "event",
+              "primary": true
+            }
+          ],
+          "label": "Match",
+          "out_ports": [
+            {
+              "id": "ok",
+              "primary": true
+            },
+            {
+              "id": "err",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "1n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": null,
+          "view_config": {
+            "heading": "Outcome",
+            "rows": "outlets"
+          }
+        },
+        {
+          "actor_type": "assemble",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Collect records with the same key, and send them as one object when the group closes.",
+          "in_ports": [
+            {
+              "id": "event",
+              "primary": true
+            }
+          ],
+          "label": "Assemble",
+          "out_ports": [
+            {
+              "id": "event",
+              "primary": true
+            },
+            {
+              "id": "_error",
+              "primary": false
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "1n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Open assemblies"
+          }
+        },
+        {
+          "actor_type": "join",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "Add the latest reference value for the same key to each event.",
+          "in_ports": [
+            {
+              "id": "event",
+              "primary": true
+            },
+            {
+              "id": "state",
+              "primary": false
+            },
+            {
+              "id": "remove",
+              "primary": false
+            }
+          ],
+          "label": "Join",
+          "out_ports": [
+            {
+              "id": "event",
+              "primary": true
+            }
+          ],
+          "ports_unavailable_reason": null,
+          "presentation_role": [
+            "1n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Enriched events",
+            "rows": "latest"
+          }
+        },
+        {
+          "actor_type": "form",
+          "config_schema": [
+            "2n",
+            "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published"
+          ],
+          "creatable": false,
+          "description": "A form you fill in and submit; its fields arrive as one event.",
+          "in_ports": [],
+          "label": "Form",
+          "out_ports": [],
+          "ports_unavailable_reason": "config-dependent ports require the authored config fold through admission; the static catalog publishes registered fixed ports only",
+          "presentation_role": [
+            "2n"
+          ],
+          "source": false,
+          "template_config": null,
+          "unavailable_reason": "registry ConfigSchema is an incomplete frame: no complete payload admission/default projection is published",
+          "view_config": {
+            "heading": "Input form"
+          }
+        }
+      ],
+      "terminal": "2n"
+    }
+  ]
+}

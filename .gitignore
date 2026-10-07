@@ -1,0 +1,9 @@
+target/
+node_modules/
+dist/
+# Written by scripts/build-artifact.py beside the source it builds; never committed.
+/BUILD_INFO
+.DS_Store
+
+# Written by the export tool for a human or agent reviewer; never committed.
+.export-review/

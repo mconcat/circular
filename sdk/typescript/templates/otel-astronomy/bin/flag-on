@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+"""Injects a fault in the OpenTelemetry demo by turning one of its feature flags on.
+
+usage: flag-on <demo url> <flag> [variant]
+
+The variant defaults to "on". Flags that fail a share of requests take a percentage
+variant instead, for example: flag-on http://localhost:8080 paymentFailure 100%
+
+It touches the same single thing as flag-off: the demo's flag file, through the Feature
+Flags page's API at <demo url>/feature/api/. Undo it with flag-off.
+"""
+import json
+import sys
+import urllib.request
+
+
+def main():
+    if len(sys.argv) not in (3, 4):
+        print("usage: flag-on <demo url> <flag> [variant]", file=sys.stderr)
+        return 2
+    api = sys.argv[1].rstrip("/") + "/feature/api/"
+    name = sys.argv[2]
+    variant = sys.argv[3] if len(sys.argv) == 4 else "on"
+    with urllib.request.urlopen(api + "read-file", timeout=10) as response:
+        config = json.load(response)
+    flag = config["flags"].get(name)
+    if flag is None:
+        print("unknown flag: " + name, file=sys.stderr)
+        return 2
+    if variant not in flag.get("variants", {}):
+        print(name + " has no variant " + variant + "; it has: " + ", ".join(flag.get("variants", {})),
+              file=sys.stderr)
+        return 2
+    before = flag["defaultVariant"]
+    flag["defaultVariant"] = variant
+    body = json.dumps({"data": config}).encode()
+    request = urllib.request.Request(api + "write-to-file", data=body, method="POST",
+                                     headers={"content-type": "application/json"})
+    with urllib.request.urlopen(request, timeout=10) as response:
+        response.read()
+    print(name + ": " + str(before) + " -> " + variant)
+    return 0
+
+
+sys.exit(main())

@@ -1,0 +1,557 @@
+/* Local assets: identical TTF files are available to a native renderer. */
+@font-face {
+  font-family: "Circular Pretendard";
+  src: url("fonts/PretendardVariable.ttf") format("truetype");
+  font-weight: 45 930;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Circular Geist Mono";
+  src: url("fonts/GeistMonoVariable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+:root {
+  --sans: "Circular Pretendard", sans-serif;
+  --mono: "Circular Geist Mono", "Circular Pretendard", monospace;
+  font-size: 14px;
+  font-synthesis: none;
+}
+body {
+  font-weight: 400;
+  line-height: 1.45;
+}
+button,
+strong,
+h2,
+h3 {
+  font-weight: 500;
+}
+h1,
+.node-title,
+.inspector-identity h2 {
+  font-weight: 600;
+}
+input,
+textarea,
+select {
+  font-weight: 400;
+}
+input,
+textarea {
+  caret-color: var(--blue);
+}
+textarea {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+.view-switch button,
+.scope-row,
+.actor-list button,
+.quiet-button,
+.dark-button,
+.config-apply,
+.canvas-actions button,
+.inspector-tabs button,
+.palette-result strong,
+.prompt-send,
+.scope-enter,
+.product-utility button {
+  font-size: 13px;
+}
+.config-local-note,
+.config-change-summary,
+.detail-row,
+.subtle-note,
+.inspector details,
+.inspector details summary,
+.health-banner small,
+.health-banner strong,
+.detail-heading h3,
+.inspector-actions button {
+  font-size: 13px;
+}
+.inspector details summary {
+  line-height: 1.5;
+}
+.node-title {
+  font-size: 14px;
+  line-height: 1.25;
+}
+.node-type {
+  font-size: 11px;
+  font-family: var(--sans);
+}
+.node-state,
+.node-port {
+  font-size: 12px;
+}
+.prompt-input,
+.viewer-message,
+.scope-enter {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.node-state {
+  line-height: 1.4;
+}
+.node-port {
+  font-family: var(--sans);
+}
+.product-eyebrow,
+.section-label,
+.inspector-eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+.viewer-table {
+  font-size: 12px;
+  font-family: var(--sans);
+}
+.task-content > strong,
+.task-content h3 {
+  font-size: 18px;
+  line-height: 1.4;
+}
+.task-content small {
+  font-size: 12px;
+  line-height: 1.5;
+}
+.code-block,
+pre,
+.component-core strong,
+.component-caption {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.55;
+}
+.component-core strong {
+  font-size: 11px;
+  line-height: 1;
+}
+.component-caption {
+  font-size: 11px;
+}
+.journal-count {
+  font-variant-numeric: tabular-nums;
+}
+.statusbar,
+.time-machine,
+.time-machine button,
+.time-machine select,
+.canvas-tools,
+.canvas-tools button {
+  font-size: 12px;
+}
+.appearance-options {
+  display: grid;
+  gap: 14px;
+  margin: 18px 0;
+}
+.appearance-options fieldset {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+}
+.appearance-options label {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 14px;
+}
+.appearance-options legend {
+  font-size: 12px;
+  padding: 0 5px;
+  color: var(--muted);
+}
+.appearance-options small {
+  display: block;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.appearance-proof {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  line-height: 1.7;
+  font-size: 14px;
+}
+.appearance-proof p {
+  margin: 8px 0;
+}
+.appearance-proof code {
+  font-family: var(--mono);
+}
+
+/* Semantic paint roles. Legacy names below are aliases. */
+:root {
+  color-scheme: light;
+  /* Structure and recorded flow share one matte wire material. */
+  --hf-06-wire-strand: #838e94;
+  --hf-06-wire-light: #ffe9b8;
+  --paper: #f0f1f3;
+  --canvas: #e6e8ec;
+  --surface: #f9f9fa;
+  --elevated: #ffffff;
+  --surface-soft: #e9ecf0;
+  --ink: #252830;
+  --muted: #59616c;
+  --faint: #626975;
+  --line: #c7ccd4;
+  --line-soft: #dde0e5;
+  --grid: #929aa6;
+  --blue: #3f4d66;
+  --blue-soft: #dfe4ec;
+  --blue-border: #8893a4;
+  --green: #3d704e;
+  --green-soft: #eaf1e9;
+  --amber: #89611b;
+  --amber-soft: #fbf0d9;
+  --amber-border: #d5b675;
+  --red: #a54437;
+  --red-soft: #f9eae5;
+  --red-border: #dca99d;
+  --data: #718552;
+  --data-strong: #546b37;
+  --history: #655b8d;
+  --history-soft: #efecf6;
+  --history-data: #9387b3;
+  --solid: #30343c;
+  --on-solid: #f9f9fa;
+  --shadow: #12151a;
+  --highlight: #ffffff;
+  --chart-grid: #dce0d4;
+  --chart-rest: #c4cbbc;
+  /* Observation strokes only; labels, controls and wires keep their paint. */
+  --hf-05-core: #57535c;
+  --hf-05-halo: #77707f29;
+}
+:root[data-theme="dark"] {
+  --hf-06-wire-strand: #66717c;
+  --hf-06-wire-light: #f7efe2;
+  color-scheme: dark;
+  --paper: #101114;
+  --canvas: #0b0c0e;
+  --surface: #141519;
+  --elevated: #181a1f;
+  --surface-soft: #1b1e25;
+  --ink: #e8e8e8;
+  --muted: #a3a8b1;
+  --faint: #858a94;
+  --line: #2d3037;
+  --line-soft: #1c1e23;
+  --grid: #565d69;
+  --blue: #b0b8c8;
+  --blue-soft: #1b1e25;
+  --blue-border: #6a7385;
+  --green: #9bc5a4;
+  --green-soft: #2b4031;
+  --amber: #e2be7c;
+  --amber-soft: #493c28;
+  --amber-border: #9d814e;
+  --red: #f2aaa0;
+  --red-soft: #4b312d;
+  --red-border: #a87165;
+  --data: #9bac7f;
+  --data-strong: #bacb9d;
+  --history: #c1b4e9;
+  --history-soft: #393449;
+  --history-data: #a396c4;
+  --solid: #c4c9d1;
+  --on-solid: #141519;
+  --shadow: #000000;
+  --highlight: #30343c;
+  --chart-grid: #434c46;
+  --chart-rest: #56615a;
+  /* Neutral emission: e1.00 core, e0.70 halo at 24% opacity. */
+  --hf-05-core: #f0eaf0;
+  --hf-05-halo: #d4cfd43d;
+}
+body {
+  color: var(--ink);
+}
+.appbar,
+.sidebar,
+.inspector,
+.statusbar,
+.time-machine,
+.journal {
+  background: var(--paper);
+}
+.node,
+.project-card,
+.surface-card {
+  background: var(--surface);
+}
+.canvas-tools,
+.wire-probe,
+.wire-actions,
+dialog {
+  background: var(--elevated);
+}
+.node.selected {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--blue) 13%, transparent);
+}
+.node-icon,
+.node-header .viewer-toggle,
+.project-mark,
+.project-mark-large {
+  color: var(--muted);
+  background: var(--surface-soft);
+}
+.selected .node-icon,
+.viewer-toggle.active {
+  color: var(--blue);
+  background: var(--blue-soft);
+}
+.node-title,
+.task-content,
+.task-content strong,
+.task-content p,
+.viewer-table,
+.prompt-input {
+  color: var(--ink);
+}
+.node-type,
+.node-state,
+.node-port,
+.task-content small,
+.scope-row,
+.actor-list button,
+.detail-row,
+.subtle-note,
+.health-banner small {
+  color: var(--muted);
+}
+.scope-row.active,
+.actor-list button.selected {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+.prompt-input {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--faint);
+  opacity: 1;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+.dark-button {
+  color: var(--on-solid);
+  background: var(--solid);
+}
+.dark-button:hover:not(:disabled) {
+  background: var(--solid);
+  filter: brightness(1.08);
+}
+.health-banner {
+  background: var(--surface-soft);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.health-banner strong {
+  color: var(--ink);
+}
+.health-banner .icon,
+.node-life.green,
+.node-state .tiny-dot.green {
+  color: var(--green);
+}
+.component-core {
+  background: var(--surface);
+  color: var(--data-strong);
+  border-color: var(--line);
+  box-shadow:
+    inset 0 1px 0 var(--highlight),
+    0 2px 3px color-mix(in srgb, var(--shadow) 4%, transparent);
+}
+.component-terminal {
+  background: var(--surface-soft);
+  border-color: var(--line);
+}
+.component-caption {
+  background: var(--canvas);
+  color: var(--muted);
+}
+.wire-component.selected .component-core {
+  background: var(--blue-soft);
+  color: var(--blue);
+  border-color: var(--blue-border);
+}
+.status-pill.pending,
+.inline-notice.pending,
+.node.has-draft .node-state,
+.node .node-state[data-band="amber"],
+.approval-card.submitting {
+  color: var(--amber);
+  background: var(--amber-soft);
+}
+.status-pill.failed,
+.status-pill.rejected,
+.inline-notice.failed,
+.inline-notice.rejected,
+.node .node-state[data-band="red"],
+.wire-issue-marker {
+  color: var(--red);
+  background: var(--red-soft);
+  border-color: var(--red-border);
+}
+.status-pill.accepted,
+.inline-notice.accepted {
+  color: var(--green);
+  background: var(--green-soft);
+}
+.danger-button {
+  color: var(--red);
+}
+.history-view .time-machine,
+.history-view .health-banner {
+  color: var(--history);
+  background: var(--history-soft);
+}
+.history-view .health-banner strong {
+  color: var(--history);
+}
+.history-view .node {
+  border-color: var(--line);
+}
+.history-view .node.selected {
+  border-color: var(--blue);
+}
+.appearance-proof p {
+  color: var(--ink);
+}
+
+/* Replace the earlier tiny node typography without changing node geometry. */
+#nodes .node-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+#nodes .node-type {
+  font-size: 11px;
+}
+#nodes .node-port > span:last-child {
+  font-size: 11px;
+  max-width: 140px;
+}
+#nodes .node-viewer .prompt-input {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--surface);
+}
+#nodes .node-viewer .prompt-send,
+#nodes .node-viewer .scope-enter {
+  font-size: 13px;
+}
+#nodes .viewer-kicker,
+#nodes .viewer-kicker > span,
+#nodes .viewer-table-head,
+#nodes .result-table b {
+  font: 10px/1.5 var(--sans);
+  letter-spacing: 0.04em;
+}
+#nodes .viewer-table,
+#nodes .viewer-table-row,
+#nodes .result-table {
+  font: 12px/1.5 var(--sans);
+}
+#nodes .viewer-transfer,
+#nodes .viewer-transfer strong,
+#nodes .viewer-reading > span,
+#nodes .viewer-mailbox,
+#nodes .viewer-mailbox strong {
+  font: 11px/1.5 var(--sans);
+  font-variant-numeric: tabular-nums;
+}
+#nodes .viewer-document > strong {
+  font: 600 13px/1.5 var(--sans);
+  color: var(--ink);
+}
+#nodes .viewer-document > div {
+  font: 12px/1.5 var(--sans);
+}
+#nodes .viewer-document small {
+  font: 11px/1.5 var(--mono);
+}
+#nodes .viewer-document > div span {
+  color: var(--ink);
+}
+#nodes .viewer-file-path {
+  font-size: 11px;
+}
+.response-content .record-value {
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--ink);
+}
+.response-content .response-source {
+  margin: 12px 0 0;
+  font: 11px/1.5 var(--mono);
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+#nodes .scope-summary span,
+#nodes .instance-summary span,
+#nodes .scope-description,
+#nodes .task-evidence,
+#nodes .typed-form label,
+#nodes .typed-form output,
+.node-inline-editor label,
+.node-inline-editor input,
+.node-inline-editor select,
+.node-inline-editor textarea,
+.inline-apply {
+  font-size: 12px;
+  line-height: 1.5;
+}
+.history-view #canvas {
+  box-shadow: inset 0 2px 0 var(--history);
+}
+.history-readonly,
+.history-caption,
+.history-view #time-context {
+  color: var(--history);
+  border-color: var(--history-data);
+}
+.history-caption {
+  background: var(--history-soft);
+}
+/* Reserve the scope action in the flow; larger copy must not sit behind it. */
+#nodes .node-scope .scope-summary {
+  flex: none;
+}
+#nodes .node-scope .scope-description {
+  padding-bottom: 0;
+  min-height: 0;
+  overflow: auto;
+  flex: 1;
+}
+#nodes .node-scope .node-viewer .scope-enter {
+  position: static;
+  margin-top: auto;
+  flex: none;
+  background: var(--surface);
+  padding-top: 7px;
+}
+#nodes .viewer-table-row {
+  padding: 5px 0;
+}
+#nodes .node-tools .viewer-spark {
+  flex: 1;
+  min-height: 0;
+}

@@ -1,0 +1,78 @@
+/* Instrument typography.
+   The roles are the design's, while the product's bundled font pair and
+   readable text sizes stay in use. Prose retains the selected sans/CJK face. */
+:root {
+  --hf-02-instrument: var(--mono);
+}
+
+/* Records are aligned readings. Human-written documents and chat are prose. */
+#nodes .viewer-table,
+#nodes .viewer-table-row,
+#nodes .result-table,
+.journal-row {
+  font-family: var(--hf-02-instrument);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums slashed-zero;
+  letter-spacing: 0;
+}
+.journal-columns,
+.journal-row small,
+.journal-row > .event-kind,
+.journal-count,
+.journal-follow {
+  font-family: var(--hf-02-instrument);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums slashed-zero;
+  letter-spacing: 0;
+}
+
+/* Readings keep their existing scale; mono figures give every digit a seat. */
+#nodes .viewer-reading > strong,
+.number-content strong,
+.timing-content strong,
+.scope-summary strong,
+.instance-summary strong,
+.probe-metrics strong {
+  font-family: var(--hf-02-instrument);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums slashed-zero;
+  letter-spacing: -0.04em;
+}
+#nodes .viewer-transfer,
+#nodes .viewer-transfer strong,
+#nodes .viewer-reading > span,
+#nodes .viewer-mailbox,
+#nodes .viewer-mailbox strong,
+.number-content > span,
+.timing-content small,
+.probe-metrics > span,
+.probe-metrics small {
+  font-family: var(--hf-02-instrument);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums slashed-zero;
+  letter-spacing: 0;
+}
+
+/* Timeline and numeric parameters share the reading's stable digit rhythm. */
+#time-current,
+#time-offset,
+.time-hover strong,
+.time-hover small,
+.time-ticks,
+.title-count,
+.resize-dimensions,
+#zoom-label,
+#nodes input[type="number"],
+.config-field input[type="number"],
+.detail-row > span:last-child {
+  font-family: var(--hf-02-instrument);
+  font-variant-numeric: tabular-nums slashed-zero;
+  letter-spacing: 0;
+}
+.time-ticks,
+.time-hover small,
+#time-offset {
+  font-size: 11px;
+}

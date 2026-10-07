@@ -1,0 +1,2474 @@
+{
+  "pin": {"kind":"catalog content hash; not spec_set","sha256_8":"1b6d60a4"},
+  "response": [
+    "1n",
+    {
+      "anchor": [
+        "route",
+        "pipeline_actor",
+        "debounce",
+        "alert",
+        "tap",
+        "input",
+        "output",
+        "replicator",
+        "agent",
+        "counter",
+        "ema",
+        "windowed_reduce",
+        "timer",
+        "tool_executor",
+        "notify",
+        "peer",
+        "listener",
+        "keyed_reduce",
+        "request",
+        "file",
+        "json",
+        "otlp",
+        "match",
+        "assemble",
+        "join",
+        "form"
+      ],
+      "items": [
+        {
+          "actor_type": "route",
+          "state": [
+            "2n",
+            {
+              "relations": [
+                [
+                  "1n",
+                  [
+                    [
+                      "1n",
+                      "cases"
+                    ]
+                  ]
+                ]
+              ],
+              "slots": [
+                {
+                  "constraint": [
+                    "8n"
+                  ],
+                  "description": "The exact payload path whose value is compared.",
+                  "group": null,
+                  "label": "Compared path",
+                  "path": [
+                    [
+                      "1n",
+                      "at"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "3n",
+                    [
+                      "1n"
+                    ]
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "Each case pairs a name with a value; an event whose value matches leaves on that case's outlet.",
+                  "group": null,
+                  "label": "Cases",
+                  "path": [
+                    [
+                      "1n",
+                      "cases"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "4n",
+                    [],
+                    true
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {},
+            [
+              [
+                [
+                  "1n",
+                  "at"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "cases"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "pipeline_actor",
+          "state": [
+            "1n"
+          ]
+        },
+        {
+          "actor_type": "debounce",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": [
+                    "1n",
+                    "milliseconds"
+                  ],
+                  "description": "How long the inlet must stay quiet before the pending payload is emitted.",
+                  "group": "Timing",
+                  "label": "Quiet window",
+                  "path": [
+                    [
+                      "1n",
+                      "quiet_window"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {
+              "quiet_window": "500n"
+            },
+            [
+              [
+                [
+                  "1n",
+                  "quiet_window"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "alert",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": [
+                    "1n",
+                    "nonzero_milliseconds"
+                  ],
+                  "description": "How long a violation must persist before the alert moves to firing.",
+                  "group": "Timing",
+                  "label": "Firing delay",
+                  "path": [
+                    [
+                      "1n",
+                      "firing_delay"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "Evaluated once per arrival. A boolean true is read as a violation.",
+                  "group": null,
+                  "label": "Condition",
+                  "path": [
+                    [
+                      "1n",
+                      "predicate"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": {
+                    "inlets": [
+                      "event"
+                    ],
+                    "mode": "predicate"
+                  }
+                },
+                {
+                  "constraint": [
+                    "1n",
+                    "nonzero_milliseconds"
+                  ],
+                  "description": "How long a recovery must persist before the alert returns to ok.",
+                  "group": "Timing",
+                  "label": "Recovery delay",
+                  "path": [
+                    [
+                      "1n",
+                      "recovery_delay"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {
+              "firing_delay": "30000n",
+              "recovery_delay": "60000n"
+            },
+            [
+              [
+                [
+                  "1n",
+                  "firing_delay"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "predicate"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "recovery_delay"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "tap",
+          "state": [
+            "1n"
+          ]
+        },
+        {
+          "actor_type": "input",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": null,
+                  "description": "The display name of this boundary.",
+                  "group": null,
+                  "label": "Label",
+                  "path": [
+                    [
+                      "1n",
+                      "label"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "9n"
+                  ],
+                  "description": "The type of the values this boundary injects.",
+                  "group": null,
+                  "label": "Value type",
+                  "path": [
+                    [
+                      "1n",
+                      "shape"
+                    ]
+                  ],
+                  "requirement": [
+                    "3n",
+                    [
+                      "1n",
+                      [
+                        "1n"
+                      ]
+                    ]
+                  ],
+                  "shape": [
+                    "3n",
+                    [
+                      "1n"
+                    ]
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {},
+            [
+              [
+                [
+                  "1n",
+                  "label"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "output",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": null,
+                  "description": "The display name of this boundary.",
+                  "group": null,
+                  "label": "Label",
+                  "path": [
+                    [
+                      "1n",
+                      "label"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {},
+            [
+              [
+                [
+                  "1n",
+                  "label"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "replicator",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": [
+                    "8n"
+                  ],
+                  "description": "The exact payload path whose value becomes the cell key.",
+                  "group": null,
+                  "label": "Key path",
+                  "path": [
+                    [
+                      "1n",
+                      "at"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "3n",
+                    [
+                      "1n"
+                    ]
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "2n",
+                    "1n",
+                    null
+                  ],
+                  "description": "The maximum number of live cells.",
+                  "group": null,
+                  "label": "Capacity",
+                  "path": [
+                    [
+                      "1n",
+                      "capacity"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "1n",
+                    "nonzero_milliseconds"
+                  ],
+                  "description": "A cell that sees nothing for this long retires.",
+                  "group": "Timing",
+                  "label": "Idle lifetime",
+                  "path": [
+                    [
+                      "1n",
+                      "ttl"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {
+              "capacity": "16n",
+              "ttl": "60000n"
+            },
+            [
+              [
+                [
+                  "1n",
+                  "at"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "capacity"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "ttl"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "agent",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": [
+                    "5n",
+                    [
+                      "none",
+                      "required"
+                    ]
+                  ],
+                  "description": "Whether the harness step needs approval.",
+                  "group": "Effect policy",
+                  "label": "Require approval",
+                  "path": [
+                    [
+                      "1n",
+                      "approval"
+                    ]
+                  ],
+                  "requirement": [
+                    "2n",
+                    "none"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "5n",
+                    [
+                      "claude",
+                      "codex",
+                      "pi"
+                    ]
+                  ],
+                  "description": "Which external harness to invoke.",
+                  "group": null,
+                  "label": "Harness",
+                  "path": [
+                    [
+                      "1n",
+                      "harness"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "2n",
+                    "1n",
+                    null
+                  ],
+                  "description": "The most turns that can wait inside the agent while it works on one.",
+                  "group": null,
+                  "label": "Queue capacity",
+                  "path": [
+                    [
+                      "1n",
+                      "queue_capacity"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "5n",
+                    [
+                      "bytes",
+                      "json"
+                    ]
+                  ],
+                  "description": "Selects the type of the result outlet.",
+                  "group": null,
+                  "label": "Result type",
+                  "path": [
+                    [
+                      "1n",
+                      "result"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "The tool policy.",
+                  "group": null,
+                  "label": "Tools",
+                  "path": [
+                    [
+                      "1n",
+                      "tools"
+                    ]
+                  ],
+                  "requirement": [
+                    "2n",
+                    []
+                  ],
+                  "shape": [
+                    "1n"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {
+              "queue_capacity": "8n",
+              "tools": []
+            },
+            [
+              [
+                [
+                  "1n",
+                  "harness"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "queue_capacity"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "result"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "counter",
+          "state": [
+            "1n"
+          ]
+        },
+        {
+          "actor_type": "ema",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": [
+                    "1n",
+                    "nonzero_milliseconds"
+                  ],
+                  "description": "The half-life of the decay.",
+                  "group": null,
+                  "label": "Half-life",
+                  "path": [
+                    [
+                      "1n",
+                      "half_life"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "5n",
+                    [
+                      "samples",
+                      "wallclock"
+                    ]
+                  ],
+                  "description": "Which distance the decay is measured in.",
+                  "group": null,
+                  "label": "Time basis",
+                  "path": [
+                    [
+                      "1n",
+                      "time_basis"
+                    ]
+                  ],
+                  "requirement": [
+                    "2n",
+                    "samples"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {
+              "time_basis": "samples"
+            },
+            [
+              [
+                [
+                  "1n",
+                  "half_life"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "windowed_reduce",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": [
+                    "1n",
+                    "nonzero_milliseconds"
+                  ],
+                  "description": "How often the window is folded.",
+                  "group": "Timing",
+                  "label": "Emission period",
+                  "path": [
+                    [
+                      "1n",
+                      "emission_period"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "The fold step, evaluated with two bindings: acc, the value folded so far, and sample, the incoming value.",
+                  "group": null,
+                  "label": "Fold step",
+                  "path": [
+                    [
+                      "1n",
+                      "reduce"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": {
+                    "inlets": [
+                      "sample"
+                    ],
+                    "mode": "reduce"
+                  }
+                },
+                {
+                  "constraint": null,
+                  "description": "The starting value of the fold.",
+                  "group": null,
+                  "label": "Starting value",
+                  "path": [
+                    [
+                      "1n",
+                      "seed"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "1n"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "1n",
+                    "milliseconds"
+                  ],
+                  "description": "The width of the window.",
+                  "group": "Timing",
+                  "label": "Window length",
+                  "path": [
+                    [
+                      "1n",
+                      "window_length"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {
+              "emission_period": "5000n",
+              "window_length": "60000n"
+            },
+            [
+              [
+                [
+                  "1n",
+                  "emission_period"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "reduce"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "seed"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "window_length"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "timer",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": [
+                    "1n",
+                    "nonzero_milliseconds"
+                  ],
+                  "description": "The interval between ticks.",
+                  "group": "Timing",
+                  "label": "Interval",
+                  "path": [
+                    [
+                      "1n",
+                      "every"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {
+              "every": "1000n"
+            },
+            [
+              [
+                [
+                  "1n",
+                  "every"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "tool_executor",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": null,
+                  "description": "One grant per effect the tools use.",
+                  "group": "Effect policy",
+                  "label": "Permissions",
+                  "path": [
+                    [
+                      "1n",
+                      "capabilities"
+                    ]
+                  ],
+                  "policies": {
+                    "FsRead": [
+                      {
+                        "constraint": [
+                          "5n",
+                          [
+                            "none",
+                            "required"
+                          ]
+                        ],
+                        "description": "Whether an effect under this grant waits for approval.",
+                        "group": "Read files",
+                        "label": "Approval",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "FsRead"
+                          ],
+                          [
+                            "1n",
+                            "approval"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "2n",
+                          "string"
+                        ],
+                        "snippet": null
+                      },
+                      {
+                        "constraint": null,
+                        "description": "The absolute directories this grant covers.",
+                        "group": "Read files",
+                        "label": "Allowed directories",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "FsRead"
+                          ],
+                          [
+                            "1n",
+                            "roots"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "3n",
+                          [
+                            "2n",
+                            "string"
+                          ]
+                        ],
+                        "snippet": null
+                      }
+                    ],
+                    "FsWrite": [
+                      {
+                        "constraint": [
+                          "5n",
+                          [
+                            "none",
+                            "required"
+                          ]
+                        ],
+                        "description": "Whether an effect under this grant waits for approval.",
+                        "group": "Write files",
+                        "label": "Approval",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "FsWrite"
+                          ],
+                          [
+                            "1n",
+                            "approval"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "2n",
+                          "string"
+                        ],
+                        "snippet": null
+                      },
+                      {
+                        "constraint": null,
+                        "description": "The absolute directories this grant covers.",
+                        "group": "Write files",
+                        "label": "Allowed directories",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "FsWrite"
+                          ],
+                          [
+                            "1n",
+                            "roots"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "3n",
+                          [
+                            "2n",
+                            "string"
+                          ]
+                        ],
+                        "snippet": null
+                      }
+                    ],
+                    "ProcessSpawn": [
+                      {
+                        "constraint": [
+                          "5n",
+                          [
+                            "none",
+                            "required"
+                          ]
+                        ],
+                        "description": "Whether an effect under this grant waits for approval.",
+                        "group": "Run programs",
+                        "label": "Approval",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "ProcessSpawn"
+                          ],
+                          [
+                            "1n",
+                            "approval"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "2n",
+                          "string"
+                        ],
+                        "snippet": null
+                      }
+                    ]
+                  },
+                  "requirement": [
+                    "2n",
+                    {}
+                  ],
+                  "shape": [
+                    "4n",
+                    [],
+                    true
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "The tools this actor may run, each named with the one effect it performs; for example, read_log with effect file_read and a path.",
+                  "group": null,
+                  "label": "Tools",
+                  "path": [
+                    [
+                      "1n",
+                      "tools"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "4n",
+                    [],
+                    true
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {},
+            [
+              [
+                [
+                  "1n",
+                  "tools"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "notify",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": null,
+                  "description": "The grant for the notification effect.",
+                  "group": "Effect policy",
+                  "label": "Permissions",
+                  "path": [
+                    [
+                      "1n",
+                      "capabilities"
+                    ]
+                  ],
+                  "policies": {
+                    "UserNotify": [
+                      {
+                        "constraint": [
+                          "5n",
+                          [
+                            "none",
+                            "required"
+                          ]
+                        ],
+                        "description": "Whether an effect under this grant waits for approval.",
+                        "group": "Send notifications",
+                        "label": "Approval",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "UserNotify"
+                          ],
+                          [
+                            "1n",
+                            "approval"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "2n",
+                          "string"
+                        ],
+                        "snippet": null
+                      }
+                    ]
+                  },
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "4n",
+                    [],
+                    true
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "The logical channel name.",
+                  "group": null,
+                  "label": "Channel",
+                  "path": [
+                    [
+                      "1n",
+                      "channel"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "5n",
+                    [
+                      "latest",
+                      "queue",
+                      "suppress"
+                    ]
+                  ],
+                  "description": "What to do with a notification that arrives during the interval.",
+                  "group": null,
+                  "label": "During the interval",
+                  "path": [
+                    [
+                      "1n",
+                      "during_interval"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "1n",
+                    "milliseconds"
+                  ],
+                  "description": "The shortest gap between two submissions.",
+                  "group": "Timing",
+                  "label": "Minimum interval",
+                  "path": [
+                    [
+                      "1n",
+                      "minimum_interval"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "10n",
+                    "nonzero_milliseconds"
+                  ],
+                  "description": "The waits between retries of a delivery, in milliseconds.",
+                  "group": "Effect policy",
+                  "label": "Retry waits",
+                  "path": [
+                    [
+                      "1n",
+                      "retry_delays"
+                    ]
+                  ],
+                  "requirement": [
+                    "2n",
+                    [
+                      "1000n",
+                      "1000n",
+                      "1000n",
+                      "5000n",
+                      "5000n",
+                      "5000n",
+                      "15000n",
+                      "15000n",
+                      "15000n"
+                    ]
+                  ],
+                  "shape": [
+                    "3n",
+                    [
+                      "2n",
+                      "int"
+                    ]
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {
+              "minimum_interval": "60000n"
+            },
+            [
+              [
+                [
+                  "1n",
+                  "capabilities"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "channel"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "during_interval"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "minimum_interval"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "peer",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": [
+                    "5n",
+                    [
+                      "claude",
+                      "codex",
+                      "memory"
+                    ]
+                  ],
+                  "description": "The peer adapter name.",
+                  "group": null,
+                  "label": "Adapter",
+                  "path": [
+                    [
+                      "1n",
+                      "adapter"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "Who may send to this actor: any_known_peer set to true for every sender on this adapter and realm, or exact with the list of allowed addresses.",
+                  "group": null,
+                  "label": "Inbound policy",
+                  "path": [
+                    [
+                      "1n",
+                      "inbound_policy"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "4n",
+                    [],
+                    true
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "2n",
+                    "1n",
+                    null
+                  ],
+                  "description": "How many incoming messages can wait before this actor records them.",
+                  "group": null,
+                  "label": "Inbox capacity",
+                  "path": [
+                    [
+                      "1n",
+                      "inbox_capacity"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "The requested binding name.",
+                  "group": null,
+                  "label": "Binding name",
+                  "path": [
+                    [
+                      "1n",
+                      "name"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "The realm this actor binds into.",
+                  "group": null,
+                  "label": "Realm",
+                  "path": [
+                    [
+                      "1n",
+                      "realm"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {
+              "inbox_capacity": "64n"
+            },
+            [
+              [
+                [
+                  "1n",
+                  "adapter"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "inbound_policy"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "inbox_capacity"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "name"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "realm"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "listener",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": null,
+                  "description": "The grant for reading the origin files.",
+                  "group": "Effect policy",
+                  "label": "Permissions",
+                  "path": [
+                    [
+                      "1n",
+                      "capabilities"
+                    ]
+                  ],
+                  "policies": {
+                    "FsRead": [
+                      {
+                        "constraint": [
+                          "5n",
+                          [
+                            "none",
+                            "required"
+                          ]
+                        ],
+                        "description": "Whether an effect under this grant waits for approval.",
+                        "group": "Read files",
+                        "label": "Approval",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "FsRead"
+                          ],
+                          [
+                            "1n",
+                            "approval"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "2n",
+                          "string"
+                        ],
+                        "snippet": null
+                      },
+                      {
+                        "constraint": null,
+                        "description": "The absolute directories this grant covers.",
+                        "group": "Read files",
+                        "label": "Allowed directories",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "FsRead"
+                          ],
+                          [
+                            "1n",
+                            "roots"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "3n",
+                          [
+                            "2n",
+                            "string"
+                          ]
+                        ],
+                        "snippet": null
+                      }
+                    ]
+                  },
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "4n",
+                    [],
+                    true
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "The origin to listen to: kind file_tail, whose value names the files to follow (glob) and the milliseconds between reads (poll).",
+                  "group": null,
+                  "label": "Source",
+                  "path": [
+                    [
+                      "1n",
+                      "source"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "4n",
+                    [
+                      {
+                        "name": "kind",
+                        "shape": [
+                          "2n",
+                          "string"
+                        ]
+                      },
+                      {
+                        "name": "value",
+                        "shape": [
+                          "4n",
+                          [
+                            {
+                              "name": "glob",
+                              "shape": [
+                                "2n",
+                                "string"
+                              ]
+                            },
+                            {
+                              "name": "poll",
+                              "shape": [
+                                "2n",
+                                "int"
+                              ]
+                            }
+                          ],
+                          false
+                        ]
+                      }
+                    ],
+                    false
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {},
+            [
+              [
+                [
+                  "1n",
+                  "capabilities"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "source"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "keyed_reduce",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": [
+                    "8n"
+                  ],
+                  "description": "The exact payload path that selects the key.",
+                  "group": null,
+                  "label": "Key path",
+                  "path": [
+                    [
+                      "1n",
+                      "at"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "3n",
+                    [
+                      "1n"
+                    ]
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "8n"
+                  ],
+                  "description": "The exact payload path that selects the number to add.",
+                  "group": null,
+                  "label": "Value path",
+                  "path": [
+                    [
+                      "1n",
+                      "value"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "3n",
+                    [
+                      "1n"
+                    ]
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {},
+            [
+              [
+                [
+                  "1n",
+                  "at"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "value"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "request",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": null,
+                  "description": "The grant for the HTTP effect.",
+                  "group": "Effect policy",
+                  "label": "Permissions",
+                  "path": [
+                    [
+                      "1n",
+                      "capabilities"
+                    ]
+                  ],
+                  "policies": {
+                    "HttpFetch": [
+                      {
+                        "constraint": [
+                          "5n",
+                          [
+                            "none",
+                            "required"
+                          ]
+                        ],
+                        "description": "Whether an effect under this grant waits for approval.",
+                        "group": "Send HTTP requests",
+                        "label": "Approval",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "HttpFetch"
+                          ],
+                          [
+                            "1n",
+                            "approval"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "2n",
+                          "string"
+                        ],
+                        "snippet": null
+                      }
+                    ]
+                  },
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "4n",
+                    [],
+                    true
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "The request headers.",
+                  "group": null,
+                  "label": "Headers",
+                  "path": [
+                    [
+                      "1n",
+                      "headers"
+                    ]
+                  ],
+                  "requirement": [
+                    "2n",
+                    []
+                  ],
+                  "shape": [
+                    "3n",
+                    [
+                      "4n",
+                      [
+                        {
+                          "name": "name",
+                          "shape": [
+                            "2n",
+                            "string"
+                          ]
+                        }
+                      ],
+                      true
+                    ]
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "5n",
+                    [
+                      "get",
+                      "post"
+                    ]
+                  ],
+                  "description": "The HTTP method.",
+                  "group": null,
+                  "label": "Method",
+                  "path": [
+                    [
+                      "1n",
+                      "method"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "10n",
+                    "nonzero_milliseconds"
+                  ],
+                  "description": "The waits between retries of a transient failure, in milliseconds.",
+                  "group": "Effect policy",
+                  "label": "Retry waits",
+                  "path": [
+                    [
+                      "1n",
+                      "retry_delays"
+                    ]
+                  ],
+                  "requirement": [
+                    "2n",
+                    [
+                      "1000n",
+                      "1000n",
+                      "1000n",
+                      "5000n",
+                      "5000n",
+                      "5000n",
+                      "15000n",
+                      "15000n",
+                      "15000n"
+                    ]
+                  ],
+                  "shape": [
+                    "3n",
+                    [
+                      "2n",
+                      "int"
+                    ]
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "The request URL.",
+                  "group": null,
+                  "label": "URL",
+                  "path": [
+                    [
+                      "1n",
+                      "url"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {
+              "headers": []
+            },
+            [
+              [
+                [
+                  "1n",
+                  "capabilities"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "method"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "url"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "file",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": null,
+                  "description": "The grants for reading and for writing.",
+                  "group": "Effect policy",
+                  "label": "Permissions",
+                  "path": [
+                    [
+                      "1n",
+                      "capabilities"
+                    ]
+                  ],
+                  "policies": {
+                    "FsRead": [
+                      {
+                        "constraint": [
+                          "5n",
+                          [
+                            "none",
+                            "required"
+                          ]
+                        ],
+                        "description": "Whether an effect under this grant waits for approval.",
+                        "group": "Read files",
+                        "label": "Approval",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "FsRead"
+                          ],
+                          [
+                            "1n",
+                            "approval"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "2n",
+                          "string"
+                        ],
+                        "snippet": null
+                      },
+                      {
+                        "constraint": null,
+                        "description": "The absolute directories this grant covers.",
+                        "group": "Read files",
+                        "label": "Allowed directories",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "FsRead"
+                          ],
+                          [
+                            "1n",
+                            "roots"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "3n",
+                          [
+                            "2n",
+                            "string"
+                          ]
+                        ],
+                        "snippet": null
+                      }
+                    ],
+                    "FsWrite": [
+                      {
+                        "constraint": [
+                          "5n",
+                          [
+                            "none",
+                            "required"
+                          ]
+                        ],
+                        "description": "Whether an effect under this grant waits for approval.",
+                        "group": "Write files",
+                        "label": "Approval",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "FsWrite"
+                          ],
+                          [
+                            "1n",
+                            "approval"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "2n",
+                          "string"
+                        ],
+                        "snippet": null
+                      },
+                      {
+                        "constraint": null,
+                        "description": "The absolute directories this grant covers.",
+                        "group": "Write files",
+                        "label": "Allowed directories",
+                        "path": [
+                          [
+                            "1n",
+                            "capabilities"
+                          ],
+                          [
+                            "1n",
+                            "FsWrite"
+                          ],
+                          [
+                            "1n",
+                            "roots"
+                          ]
+                        ],
+                        "requirement": [
+                          "1n"
+                        ],
+                        "shape": [
+                          "3n",
+                          [
+                            "2n",
+                            "string"
+                          ]
+                        ],
+                        "snippet": null
+                      }
+                    ]
+                  },
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "4n",
+                    [],
+                    true
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": null,
+                  "description": "The file this actor is bound to, as an absolute path.",
+                  "group": null,
+                  "label": "Path",
+                  "path": [
+                    [
+                      "1n",
+                      "path"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {},
+            [
+              [
+                [
+                  "1n",
+                  "capabilities"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "path"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "json",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": null,
+                  "description": "The authored starting value.",
+                  "group": null,
+                  "label": "Initial value",
+                  "path": [
+                    [
+                      "1n",
+                      "initial"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "1n"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {},
+            [
+              [
+                [
+                  "1n",
+                  "initial"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "otlp",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": null,
+                  "description": "The loopback address and port to receive telemetry on, in numeric form such as 127.0.0.1:4318.",
+                  "group": null,
+                  "label": "Listen address",
+                  "path": [
+                    [
+                      "1n",
+                      "listen"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "string"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {},
+            [
+              [
+                [
+                  "1n",
+                  "listen"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "match",
+          "state": [
+            "1n"
+          ]
+        },
+        {
+          "actor_type": "assemble",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": [
+                    "8n"
+                  ],
+                  "description": "The exact payload path that selects the key.",
+                  "group": null,
+                  "label": "Key path",
+                  "path": [
+                    [
+                      "1n",
+                      "at"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "3n",
+                    [
+                      "1n"
+                    ]
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "2n",
+                    "1n",
+                    null
+                  ],
+                  "description": "How many groups may be open at once.",
+                  "group": null,
+                  "label": "Capacity",
+                  "path": [
+                    [
+                      "1n",
+                      "capacity"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "1n",
+                    "nonzero_milliseconds"
+                  ],
+                  "description": "How long a group may go without a record before it closes.",
+                  "group": "Timing",
+                  "label": "Inactivity timeout",
+                  "path": [
+                    [
+                      "1n",
+                      "inactivity_timeout"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                },
+                {
+                  "constraint": [
+                    "1n",
+                    "nonzero_milliseconds"
+                  ],
+                  "description": "The maximum age of a group, measured from when it opened.",
+                  "group": "Timing",
+                  "label": "Maximum window",
+                  "path": [
+                    [
+                      "1n",
+                      "max_window"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "2n",
+                    "int"
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {
+              "capacity": "1024n",
+              "inactivity_timeout": "3000n",
+              "max_window": "30000n"
+            },
+            [
+              [
+                [
+                  "1n",
+                  "at"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "capacity"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "inactivity_timeout"
+                ]
+              ],
+              [
+                [
+                  "1n",
+                  "max_window"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "join",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": [
+                    "8n"
+                  ],
+                  "description": "The exact payload path that selects the key.",
+                  "group": null,
+                  "label": "Key path",
+                  "path": [
+                    [
+                      "1n",
+                      "at"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "3n",
+                    [
+                      "1n"
+                    ]
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {},
+            [
+              [
+                [
+                  "1n",
+                  "at"
+                ]
+              ]
+            ]
+          ]
+        },
+        {
+          "actor_type": "form",
+          "state": [
+            "2n",
+            {
+              "relations": [],
+              "slots": [
+                {
+                  "constraint": [
+                    "7n"
+                  ],
+                  "description": "The fields a person fills in, each with its type; a committed form carries exactly these fields.",
+                  "group": null,
+                  "label": "Fields",
+                  "path": [
+                    [
+                      "1n",
+                      "fields"
+                    ]
+                  ],
+                  "requirement": [
+                    "1n"
+                  ],
+                  "shape": [
+                    "3n",
+                    [
+                      "1n"
+                    ]
+                  ],
+                  "snippet": null
+                }
+              ]
+            },
+            {},
+            [
+              [
+                [
+                  "1n",
+                  "fields"
+                ]
+              ]
+            ]
+          ]
+        }
+      ],
+      "terminal": "2n"
+    }
+  ]
+}
